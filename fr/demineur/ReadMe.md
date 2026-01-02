@@ -16,13 +16,23 @@ Le but est de révéler toutes les cases sans déclencher de mine.
 
 ---
 
+## ⚙️ Prérequis
+
+- Assurez-vous d’avoir **Java JDK 8 ou supérieur** installé
+
+Vérifier la version avec :
+
+```bash
+java --version
+```
+
 ## ⚙️ Compilation
 
 Compiler le projet à l’aide de `javac` :
 
 ```bash
 javac Demineur.java
-````
+```
 
 Cela génère les fichiers `.class` nécessaires à l’exécution du programme.
 
@@ -39,7 +49,7 @@ java Demineur [taille] [nombre_de_mines]
 ### Paramètres :
 
 * `taille` *(optionnel)* : taille de la grille (par défaut **10**)
-* `nombre_de_mines` *(optionnel)* : nombre total de mines (par défaut adapté à la taille)
+* `nombre_de_mines` *(optionnel)* : nombre total de mines (le nombre par défaut dépend de la taille)
 
 ### Exemples :
 
@@ -57,7 +67,7 @@ java Demineur 15 30
 
 | Touche     | Action                          |
 | ---------- | ------------------------------- |
-| 🡅🡇🡄🡆   | Déplacer le curseur             |
+| 🡅🡇🡄🡆    | Déplacer le curseur             |
 | **Entrée** | Révéler la case sélectionnée    |
 | **F**      | Poser ou retirer un drapeau     |
 | **R**      | Recommencer une nouvelle partie |
@@ -67,10 +77,9 @@ java Demineur 15 30
 
 ## 🕹️ Règles du jeu
 
-* Le but est de **révéler toutes les cases non minées**.
-* Si vous révélez une mine 💥 → **Game Over**
-* Si vous révélez toutes les cases sûres → **Victoire 🎉**
-* Les chiffres indiquent combien de mines se trouvent **dans les 8 cases voisines**.
+* Si vous révélez une mine 💥 → **c'est perdu**
+* Si vous révélez toutes les cases sûres et marquez toute les mines → **Victoire 🎉**
 * Utilisez un drapeau 🚩 pour marquer une case suspecte
+* Les chiffres indiquent combien de mines se trouvent **dans les 8 cases voisines**.
 
 ---
