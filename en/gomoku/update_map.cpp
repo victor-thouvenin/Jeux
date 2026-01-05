@@ -18,35 +18,28 @@ void update_arround(goban &gboard, int16 size, int16 x, int16 y, cell::direction
     bool check1 = true;
     bool check2 = true;
 
+    auto check_dr = [sign, v](bool &check, int16 &nsign, int16 x, int16 y){
+        cell &cell = gboard(x, y);
+        v = cell;
+        if (nsign == sign && v*nsign != cell::bad && v*nsign < 0)
+            nsign *= -1;
+        v *= nsign;
+        check = v != -cell::bad && v >= 0;
+        if (check && v > 0) {
+            find_max(gboard, x, y, dr, v, nsign, false);
+            cell.set_max(dr);
+            cell = cell.find_best()*nsign;
+        }
+    };
     for (int16 i = 1; i < 5; i++) {
         check1 = check1 && x+ dr_x*i < size && y+ dr_y*i >= 0 && y+ dr_y*i < size;
         if (check1) {
-            cell &cell = gboard(x+ dr_x*i, y+ dr_y*i);
-            v = cell;
-            if (sign1 == sign && v*sign1 != cell::bad && v*sign1 < 0)
-                sign1 *= -1;
-            v *= sign1;
-            check1 = v != -cell::bad && v >= 0;
-            if (check1 && v > 0) {
-                find_max(gboard, x+ dr_x*i, y+ dr_y*i, dr, v, sign1, false);
-                cell.set_max(dr);
-                cell = cell.find_best()*sign1;
-            }
+            check_dr(check1, sign1, x+ dr_x*i, y+ dr_y*i);
         }
 
         check2 = check2 && x- dr_x*i >= 0 && y- dr_y*i >= 0 && y- dr_y*i < size;
         if (check2) {
-            cell &cell = gboard(x- dr_x*i, y- dr_y*i);
-            v = cell;
-            if (sign2 == sign && v*sign2 != cell::bad && v*sign2 < 0)
-                sign2 *= -1;
-            v *= sign2;
-            check2 = v != -cell::bad && v >= 0;
-            if (check2 && v > 0) {
-                find_max(gboard, x- dr_x*i, y- dr_y*i, dr, v, sign2, false);
-                cell.set_max(dr);
-                cell = cell.find_best()*sign2;
-            }
+            check_dr(check2, sign2, x- dr_x*i, y- dr_y*i);
         }
 
         if (!check1 && !check2)
@@ -95,7 +88,7 @@ void find_max(goban &gboard, int16 x, int16 y, cell::direction dr, int16 &best, 
             comb[2] = v2 < 0 ? -1 : v2 == 0 ? comb[2] : comb[2] | (1 << (i+2));
         if (comb[3] >= 0 && i == 1)
             comb[3] = v2 < 0 ? -1 : v2 == 0 ? comb[3] : comb[3] | (1 << 4);
-        if ((comb[0] & comb[1] & comb[2] & comb[3] & comb[4]) == -1)
+        if ((comb[0] & comb[1] & comb[2] & comb[3] & comb[4]) == -1 || (v1 < 0 && v2 < 0))
             break;
     }
     std::vector<cell::comb> score = convert(comb);

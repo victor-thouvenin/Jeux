@@ -12,15 +12,15 @@ Le but est d’être le premier à aligner **cinq pions consécutifs** horizonta
 - Taille du plateau configurable (passée en paramètre)
 - Interface entièrement en **console**
 - Trois commandes principales pour interagir avec le jeu :
-  - `begin` : laisse l’IA commencer la partie
-  - `where [x y]` : montre l'emplacement de la case aux coordonnées données
-  - `end` (ou `Ctrl+D`) : termine la partie
+  - `commence` : laisse l’IA commencer la partie
+  - `où [x y]` : montre l'emplacement de la case aux coordonnées données
+  - `stop` (ou `Ctrl+D`) : termine la partie
 
 ---
 
 ## ⚙️ Compilation
 
-Assurez-vous d’avoir un compilateur **g++ 13.X** ou supérieur.
+Assurez-vous d’avoir un compilateur **g++ 17** ou supérieur.
 
 Pour compiler le programme, exécutez simplement :
 
@@ -68,12 +68,12 @@ Lancez le programme avec la commande :
 
 ## 🎮 Commandes en jeu
 
-| Commande        | Arguments                                 | Description                                                   |
-| --------------- | ----------------------------------------- | ------------------------------------------------------------- |
-| **begin**       | *(aucun)*                                 | Laisse l’IA commencer la partie *(mode solo uniquement)*      |
-| **[x y]**       | coordonnées de la case (ex : `7 8`)       | joue à l'emplacement demandé                                  |
-| **where [x y]** | coordonnées de la case (ex : `where 7 8`) | Indique l'emplacement de la case demandée *(n'est pas compté comme une action)*|
-| **end** (ou **Ctrl+D**)| *(aucun)*                          | Termine la partie proprement                                  |
+| Commande              | Arguments                                 | Description                                                   |
+| --------------------- | ----------------------------------------- | ------------------------------------------------------------- |
+| `commence`            | *(aucun)*                                 | Laisse l’IA commencer la partie *(mode solo uniquement)*      |
+| `[x y]`               | coordonnées de la case (ex : `7 8`)       | joue à l'emplacement demandé                                  |
+| `où [x y]`            | coordonnées de la case (ex : `où 7 8`)    | Indique l'emplacement de la case demandée *(n'est pas compté comme une action)* |
+| `stop` ou `Ctrl+D`    | *(aucun)*                                 | Termine la partie proprement                                  |
 
 Les autres actions (gestion des tours, affichage du plateau, détection de victoire) sont automatiques.
 
@@ -100,8 +100,8 @@ $ ./gomoku 15
 | . . . . . . . . . . . . . . . |
 | . . . . . . . . . . . . . . . |
 +-------------------------------+
-your turn > begin
-ai plays 8,8
+tour du joueur > commence
+l'IA a joué 8,8
 +-------------------------------+
 | . . . . . . . . . . . . . . . |
 | . . . . . . . . . . . . . . . |
@@ -119,7 +119,7 @@ ai plays 8,8
 | . . . . . . . . . . . . . . . |
 | . . . . . . . . . . . . . . . |
 +-------------------------------+
-your turn > 8 9
+tour du joueur > 8 9
 +-------------------------------+
 | . . . . . . . . . . . . . . . |
 | . . . . . . . . . . . . . . . |
@@ -137,7 +137,7 @@ your turn > 8 9
 | . . . . . . . . . . . . . . . |
 | . . . . . . . . . . . . . . . |
 +-------------------------------+
-ai's turn > 9 8
+tour de l'IA > 9 8
 +-------------------------------+
 | . . . . . . . . . . . . . . . |
 | . . . . . . . . . . . . . . . |
@@ -158,7 +158,7 @@ ai's turn > 9 8
 
 [...]
 
-ai's turn > 10 9
+tour de l'IA > 10 9
 +-------------------------------+
 | . . . . . . . . . . . . . . . |
 | . . . . . . . . . . . . . . . |
@@ -176,7 +176,7 @@ ai's turn > 10 9
 | . . . . . . . . . . . . . . . |
 | . . . . . . . . . . . . . . . |
 +-------------------------------+
-your turn > where 8 7
+tour du joueur > où 8 7
 +-------------------------------+
 | . . . . . . . . . . . . . . . |
 | . . . . . . . . . . . . . . . |
@@ -194,7 +194,7 @@ your turn > where 8 7
 | . . . . . . . . . . . . . . . |
 | . . . . . . . . . . . . . . . |
 +-------------------------------+
-your turn > 8 7
+tour du joueur > 8 7
 +-------------------------------+
 | . . . . . . . . . . . . . . . |
 | . . . . . . . . . . . . . . . |
@@ -221,11 +221,10 @@ your turn > 8 7
 
 ## 🧠 Règles du jeu
 
-* Le but est d’aligner **5 pions consécutifs** (horizontalement, verticalement ou en diagonale).
+* Le premier à aligner **5 pions consécutifs** (horizontalement, verticalement ou en diagonale) gagne la partie.
 * Le joueur et l’IA jouent chacun leur tour.
-* Le premier à former un alignement gagne la partie.
 * Si la grille est remplie sans vainqueur, la partie est déclarée **nulle**.
-* La commande `end` (ou `Ctrl+D`) permet d’interrompre la partie à tout moment.
+* La commande `stop` (ou `Ctrl+D`) permet d’interrompre la partie à tout moment.
 
 ---
 

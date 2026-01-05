@@ -74,13 +74,13 @@ int game_loop(goban &gboard, bool multi) {
                     continue;
                 case 2:
                     if (multi)
-                        std::cerr << "no ai in multiplayer mode" << std::endl;
+                        std::cerr << "no AI in multiplayer mode" << std::endl;
                     else if (gboard.ally_highest() != -1 || gboard.ennemi_highest() != -1)
                         std::cerr << "game has already began" << std::endl;
                     else {
                         x = gboard.size()/2, y = gboard.size()/2;
                         gboard.turn(x, y, 0);
-                        std::cout << "ai plays " << y+1 << ',' << x+1 << std::endl;
+                        std::cout << "AI plays " << y+1 << ',' << x+1 << std::endl;
                     }
                     continue;
             }
@@ -110,7 +110,7 @@ int game_loop(goban &gboard, bool multi) {
         }
         if (!multi) {
             gboard.print();
-            std::cout << "ai's turn > ";
+            std::cout << "AI's turn > ";
             try {
                 ai_plays(gboard);
             } catch (GameEnd &e) {
@@ -131,7 +131,7 @@ int main(int ac, char **av)
 {
     int16 size;
     if (ac < 2){
-        std::cerr << "grid size is missing" << std::endl;
+        std::cerr << "ERROR: grid size is missing" << std::endl;
         return 1;
     }
     try {
