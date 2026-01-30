@@ -105,7 +105,7 @@ class Program {
             count++;
             printGrid();
             if (checkGrid()){
-                Console.WriteLine("you win in {0} {1}", count, count > 1 ? "moves" : "move");
+                Console.WriteLine("you won in {0} {1}", count, count > 1 ? "moves" : "move");
                 break;
             }
             Console.WriteLine("move: {0}", count);
