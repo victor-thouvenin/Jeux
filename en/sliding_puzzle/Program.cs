@@ -18,7 +18,7 @@ class Program {
         Random rnd = new Random(DateTime.Now.Millisecond);
         rnd = new Random(rnd.Next());
         int[] dir = {-size, -1, 1, size};
-        for (int i = 0; i < 50*size; i++){
+        for (int i = 0; i < 20*size*size; i++){
             int r = rnd.Next(4);
             move(dir[r], ref fs);
             rnd = new Random(rnd.Next());
@@ -35,16 +35,15 @@ class Program {
     }
 
     static void printGrid() {
-        int nbsp = (size <= 4) ? 1 : 2;
-        string border = string.Concat(Enumerable.Repeat("#", grid.Length*(nbsp+1)+3));
+        string border = string.Concat(Enumerable.Repeat("#", grid.Length*3+3));
         Console.WriteLine("\n"+border);
         foreach (int[] t in grid){
             Console.Write("# ");
             foreach (int i in t) {
                 if (i == size*size-1) {
-                    Console.Write(string.Concat(Enumerable.Repeat(" ", nbsp+1)));
+                    Console.Write(string.Concat(Enumerable.Repeat(" ", 3)));
                 } else {
-                    Console.Write("{0:X"+nbsp+"} ", i+1);
+                    Console.Write("{0:X}{1:X} ", i/size, i%size);
                 }
             }
             Console.WriteLine("#");
@@ -66,13 +65,13 @@ class Program {
         if (arg.Length < 2)
             size = 4;
         else if (!Int32.TryParse(arg[1], out size)) {
-            Console.WriteLine("Error: size must be a number");
+            Console.Error.WriteLine("Error: size must be a number");
             return 1;
         } else if (size < 3) {
-            Console.WriteLine("Error: grid is too small");
+            Console.Error.WriteLine("Error: grid is too small");
             return 1;
         } else if (size > 16) {
-            Console.WriteLine("Error: grid is too big");
+            Console.Error.WriteLine("Error: grid is too big");
             return 1;
         }
         Console.WriteLine("size: {0}X{0}", size);
