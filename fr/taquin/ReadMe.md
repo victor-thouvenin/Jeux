@@ -8,7 +8,7 @@ Le joueur doit **réordonner les nombres** en déplaçant les cases à l’aide 
 ## 🧩 Fonctionnalités
 
 - Jeu entièrement en **console**
-- Taille de la grille **personnalisable** au lancement (`N x N`)
+- Taille de la grille **personnalisable** au lancement
 - **Déplacement fluide** à l’aide des flèches du clavier
 - Mélange initial aléatoire mais toujours résolvable
 - Affichage clair de la grille et du nombre de coups joués
@@ -52,7 +52,7 @@ dotnet run [taille]
 
 ## 🧠 Règles du jeu
 
-* Le plateau contient les nombres de **0** à `N-1` en hexadécimal (i.e. les lettres `A` à `F` représentent les nombres de 10 à 15) dans chaque ligne, et une **case vide** représente la case `[N-1][N-1]`.
+* Un plateau de taille `N` contient les nombres de **0** à `N-1` en hexadécimal (i.e. les lettres `A` à `F` représentent les nombres de 10 à 15) dans chaque ligne, et une **case vide** représente la case `[N-1][N-1]`.
 * Le but est de **réorganiser les tuiles dans l’ordre croissant**.
 
 ### Exemple pour une grille :
@@ -67,7 +67,7 @@ dotnet run [taille]
 ```
 
 * la case vide est représentée par ` `(espace) en jeu, et `//` dans cet exemple.
-* Le jeu se termine automatiquement quand la grille est en ordre croissant.
+* Le jeu se termine automatiquement quand la grille est ordonée.
 
 ---
 
