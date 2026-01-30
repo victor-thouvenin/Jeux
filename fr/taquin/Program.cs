@@ -18,7 +18,7 @@ class Program {
         Random rnd = new Random(DateTime.Now.Millisecond);
         rnd = new Random(rnd.Next());
         int[] dir = {-size, -1, 1, size};
-        for (int i = 0; i < 50*size; i++){
+        for (int i = 0; i < 20*size*size; i++){
             int r = rnd.Next(4);
             move(dir[r], ref fs);
             rnd = new Random(rnd.Next());
@@ -65,13 +65,13 @@ class Program {
         if (arg.Length < 2)
             size = 4;
         else if (!Int32.TryParse(arg[1], out size)) {
-            Console.WriteLine("Erreur: la taille doit être un nombre");
+            Console.Error.WriteLine("Erreur: la taille doit être un nombre");
             return 1;
         } else if (size < 3) {
-            Console.WriteLine("Erreur: la grille est trop peite");
+            Console.Error.WriteLine("Erreur: la grille est trop peite");
             return 1;
         } else if (size > 16) {
-            Console.WriteLine("Erreur: la grille est trop grande");
+            Console.Error.WriteLine("Erreur: la grille est trop grande");
             return 1;
         }
         Console.WriteLine("taille : {0}X{0}", size);

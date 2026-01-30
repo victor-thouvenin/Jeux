@@ -52,7 +52,7 @@ dotnet run [taille]
 
 ## 🧠 Règles du jeu
 
-* Le plateau contient les nombres de **1** à `N×N - 1` en hexadécimal, et une **case vide**.
+* Le plateau contient les nombres de **0** à `N-1` en hexadécimal (i.e. les lettres `A` à `F` représentent les nombres de 10 à 15) dans chaque ligne, et une **case vide** représente la case `[N-1][N-1]`.
 * Le but est de **réorganiser les tuiles dans l’ordre croissant**.
 
 ### Exemple pour une grille :
@@ -62,11 +62,11 @@ dotnet run [taille]
 # 00 01 02 03 #
 # 10 11 12 13 #
 # 20 21 22 23 #
-# 30 31 32    #
+# 30 31 32 // #
 ###############
 ```
 
-* la case vide est représentée par ` `(espace) en jeu, et `/` dans cet exemple.
+* la case vide est représentée par ` `(espace) en jeu, et `//` dans cet exemple.
 * Le jeu se termine automatiquement quand la grille est en ordre croissant.
 
 ---
@@ -80,11 +80,11 @@ taille : 4X4
 # 00 01 02 03 #
 # 10 11 12 13 #
 # 20 21 22 23 #
-# 30 31 32    #
+# 30 31 32 // #
 ###############
 
 ###############
-# 00 11    02 #
+# 00 11 // 02 #
 # 12 03 10 13 #
 # 23 21 22 01 #
 # 20 30 31 32 #
@@ -93,7 +93,7 @@ taille : 4X4
 [le joueur appuie sur ↓]
 ###############
 # 00 11 10 02 #
-# 12 03    13 #
+# 12 03 // 13 #
 # 23 21 22 01 #
 # 20 30 31 32 #
 ###############
@@ -103,7 +103,7 @@ Coup : 1
 # 00 01 02 03 #
 # 10 11 12 13 #
 # 20 21 22 23 #
-# 30 31 32    #
+# 30 31 32 // #
 ###############
 victoire en 94 coups
 ```
