@@ -25,7 +25,7 @@ La communication entre les deux joueurs se fait via les **signaux UNIX** (`kill`
 
 ## ⚙️ Compilation
 
-Assurez-vous d’avoir un compilateur **C18** ou supérieur.
+Assurez-vous d’avoir un système Unix et un compilateur **C18** ou supérieur.
 
 Utiliser le `Makefile` fourni :
 
@@ -47,7 +47,7 @@ Le jeu se joue à **deux joueurs**, chacun sur un terminal séparé.
 
 ### 1️⃣ Joueur 1
 
-Lancer la première instance du jeu **avec uniquement le fichier de positions** :
+Lancer la première instance du jeu **avec le fichier de positions** :
 
 ```bash
 ./bataille_navale positions_player1.txt
@@ -91,8 +91,87 @@ Chaque ligne correspond à un bateau avec le format suivant :
 ## 🎮 Commandes en jeu
 
 * À votre tour, entrez une **coordonnée de tir** (ex : `B4`)
+  * ⚠️ les lettres des coordonnées (fichier de positions ou attaque) doivent être en majuscule
 * Le programme indique si le tir est **touché** ou **manqué**
 * Attendez ensuite le tir de l’adversaire
 * Le jeu continue jusqu’à ce que l’un des deux joueurs ait coulé tous les bateaux ennemis
 
 ---
+
+## 🗺️ Exemple de session
+
+### 1️⃣ Joueur 1
+
+```bash
+> ./bataille_navale positions_player1.txt
+PID: 51644
+En attente de l'ennemi...
+
+enemi connecté
+
+mes bateaux :
+ |A B C D E F G H
+-+---------------
+1|. . . . . . . 5
+2|. . 2 . . . . 5
+3|. . 2 . . . . 5
+4|. . . 3 3 3 . 5
+5|. . . . . . . 5
+6|. 4 4 4 4 . . .
+7|. . . . . . . .
+8|. . . . . . . .
+
+bateaux enemis :
+ |A B C D E F G H
+-+---------------
+1|. . . . . . . .
+2|. . . . . . . .
+3|. . . . . . . .
+4|. . . . . . . .
+5|. . . . . . . .
+6|. . . . . . . .
+7|. . . . . . . .
+8|. . . . . . . .
+
+attaque :
+```
+
+### 2️⃣ Joueur 2
+
+```bash
+> ./bataille_navale 51644 positions_player2.txt
+PID: 52654
+connecté
+
+mes bateaux :
+ |A B C D E F G H
+-+---------------
+1|. 2 2 . . . . .
+2|. . . 3 . . . .
+3|. . . 3 . . . .
+4|. . . 3 . . . .
+5|. . 4 4 4 4 . .
+6|. . . . . . . .
+7|. . . . . . . .
+8|. . . 5 5 5 5 5
+
+bateaux enemis :
+ |A B C D E F G H
+-+---------------
+1|. . . . . . . .
+2|. . . . . . . .
+3|. . . . . . . .
+4|. . . . . . . .
+5|. . . . . . . .
+6|. . . . . . . .
+7|. . . . . . . .
+8|. . . . . . . .
+
+en attente de l'attaque de l'ennemie...
+```
+
+---
+
+## 💡 Améliorations possibles
+
+* multijoueur en réseau (via socket)

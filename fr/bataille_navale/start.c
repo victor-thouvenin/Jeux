@@ -16,7 +16,7 @@ void print_map(game_t *game)
     int i = 0;
     int j = 0;
 
-    my_putstr("mes bateaux:\n |A B C D E F G H\n-+---------------");
+    my_putstr("mes bateaux :\n |A B C D E F G H\n-+---------------");
     while (i < 8) {
         my_printf("\n%i|%c", i + 1, game->player[i][j]);
         while (++j < 8)
@@ -24,7 +24,7 @@ void print_map(game_t *game)
         j = 0;
         ++i;
     }
-    my_putstr("\n\nbateaux enemis:\n |A B C D E F G H\n-+---------------");
+    my_putstr("\n\nbateaux enemis :\n |A B C D E F G H\n-+---------------");
     for (i = 0; i < 8; i++) {
         my_printf("\n%i|%c", i + 1, game->enemy[i][j]);
         while (++j < 8)
@@ -39,11 +39,11 @@ int take_turn(game_t *game)
     char *str = NULL;
     int pos = 0;
 
-    my_putstr("attaque: ");
+    my_putstr("attaque : ");
     str = get_next_line(0);
     if (str && str[0] >= 'A' && str[0] <= 'H' && str[1] >= '1' && str[1] <= '8' && str[2] == '\0') {
-        my_printf("%s: ", str);
-        pos = (str[1]-'1')<<3 + str[0]-'A';
+        my_printf("%s : ", str);
+        pos = ((str[1]-'1')<<3) + str[0]-'A';
         free(str);
     } else if (str) {
         free(str);
@@ -82,7 +82,7 @@ int check_ans(game_t *game, int play)
         return 1;
     if (play == 0)
         print_map(game);
-    my_putstr("en attente de l'attaque de l'ennemie...\n");
+    my_putstr("en attente de l'attaque de l'ennemie ...\n");
     game->sig = 0;
     pause();
     if (!receive_signal(game))
@@ -124,7 +124,7 @@ int start(struct sigaction *sa, game_t *game, int play)
         return puterror("erreur de connexion\n");
     print_map(game);
     if (play == 0) {
-        my_putstr("en attente de l'attaque de l'ennemie...\n");
+        my_putstr("en attente de l'attaque de l'ennemie ...\n");
         pause();
         if (!receive_signal(game))
             return 1;

@@ -24,7 +24,7 @@ int log_p1(char *file)
     my_printf("PID: %i\n", getpid());
     if (sigaction(U2, &sa, NULL) == -1)
         return puterror(connect_err_msg);
-    my_putstr("En attente de l'ennemi...\n\n");
+    my_putstr("En attente de l'ennemi ...\n\n");
     pause();
     if (game.eid) {
         kill(game.eid, U1);

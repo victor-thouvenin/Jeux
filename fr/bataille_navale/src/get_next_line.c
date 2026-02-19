@@ -65,7 +65,7 @@ char *str_realloc(char **s1, int size, char *s2)
     s3[i] = 0;
 
     free(*s1);
-    *s1 = s3
+    *s1 = s3;
     return s3;
 }
 
