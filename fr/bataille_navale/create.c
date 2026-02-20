@@ -75,28 +75,24 @@ int check_file(char *str, int *size, int *b, int *e)
     return 1;
 }
 
-int fill_map(int fd)
+int fill_map(int fd, char *file)
 {
-    char *str = get_next_line(fd);
+    char str[8];
     int size = 0;
     int b = 0;
     int e = 0;
     int i = 0;
 
-    while (i < 4 && str) {
-        if (!check_file(str, &size, &b, &e))
+    while (i < 4) {
+        read(fd, str, 8);
+        if (!check_file(str, &size, &b, &e) || !set_boat(size, b, e)) {
+            dprintf(2, "dans %s à la ligne %i\n", file, i+1);
             return 0;
-        if (!set_boat(size, b, e))
-            return 0;
-        free(str);
-        str = NULL;
-        str = get_next_line(fd);
+        }
         ++i;
     }
-    if (i != 4 || str)
+    if (i != 4 || read(fd, str, 1) != 0)
         return 0;
-    if (str)
-        free(str);
     return 1;
 }
 
@@ -108,7 +104,7 @@ int create_map(char *file)
         dprintf(2, "le fichier %s n'a pas été trouvé ou n'a pas pu être ouvert\n", file);
         return 0;
     }
-    if ((!fill_map(fd)) | (close(fd) == -1))
+    if ((!fill_map(fd, file)) | (close(fd) == -1))
         return 0;
     return 1;
 }
