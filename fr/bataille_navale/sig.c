@@ -14,7 +14,7 @@ void give_up(void)
 {
     if (game.eid)
         send_signal(&game, 0, 0);
-    game.end = -1;
+    game.end = -2;
 }
 
 void handle_sig(int sig, siginfo_t *info, void *ptr)

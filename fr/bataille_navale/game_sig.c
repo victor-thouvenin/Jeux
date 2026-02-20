@@ -52,12 +52,11 @@ void check_hit(game_t *game)
 {
     int sig = game->sig >> 2;
 
-    if (game->sig % 4 == 2) {
+    if ((game->sig&3) == 2) {
         if (game->enemy[sig >> 3][sig&7] != 'x')
             game->enemy[sig >> 3][sig&7] = 'o';
         my_putstr("manqué\n\n");
-    }
-    else if (game->sig % 4 == 3) {
+    } else if ((game->sig&3) == 3) {
         game->enemy[sig >> 3][sig&7] = 'x';
         my_putstr("touché\n\n");
     }
