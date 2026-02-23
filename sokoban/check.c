@@ -5,8 +5,8 @@
 ** check
 */
 
+#include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
 #include "sokoban.h"
 
 int check_loose(char ** map, ntt_t *nttl)
@@ -47,13 +47,17 @@ int check_str(char *str)
     while (str[j]) {
         if ((j == 0 || str[j-1] == '\n') && str[j] != '\n')
             ++i;
-        else if (str[j] != 'P' && str[j] != 'O' && str[j] != 'X' && str[j] != ' ' && str[j] != '#' && str[j] != '\n')
+        else if (str[j] != 'P' && str[j] != 'O' && str[j] != 'X' && str[j] != ' ' && str[j] != '#' && str[j] != '\n') {
+            fprintf(stderr, "ERROR: charactere \'%c\' is invalide\n", str[j]);
             return -1;
+        }
         switch (str[j])
         {
         case 'P':
-            if (p)
+            if (p) {
+                fputs("ERROR: there is too many player on that map\n", stderr);
                 return -1;
+            }
             p = 1;
             break;
         case 'O':
@@ -65,7 +69,13 @@ int check_str(char *str)
         }
         ++j;
     }
-    if (!p || o > 0)
+    if (!p) {
+        fputs("ERROR: there is no player on that map\n", stderr);
         return -1;
+    }
+    if (o > 0) {
+        fputs("ERROR: there is not enough box on that map\n", stderr);
+        return -1;
+    }
     return i;
 }

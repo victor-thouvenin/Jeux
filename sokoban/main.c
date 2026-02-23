@@ -7,6 +7,7 @@
 
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <stdio.h>
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
@@ -20,37 +21,35 @@ char *read_file(char *path)
 
     fd = open(path, O_RDONLY);
     if (fd == -1) {
-        char *emsg = "ERROR: couldn't open \"";
-        write(2, emsg, strlen(emsg));
-        write(2, path, strlen(path));
-        write(2, "\"\n", 1);
+        char *emsg = "ERROR: couldn't open \"%s\"\n";
+        fprintf(stderr, emsg, path);
         return NULL;
     } if (stat(path, &filestat) == -1) {
         char *emsg = "an error occurred\n";
-        write(2, emsg, strlen(emsg));
+        fputs(emsg, stderr);
         close(fd);
         return NULL;
     } if (filestat.st_size < 3) {
         char *emsg = "ERROR: file is too small\n";
-        write(2, emsg, strlen(emsg));
+        fputs(emsg, stderr);
         close(fd);
         return NULL;
     } if (filestat.st_size > 2147483647) {
         char *emsg = "ERROR: file is too large\n";
-        write(2, emsg, strlen(emsg));
+        fputs(emsg, stderr);
         close(fd);
         return NULL;
     }
     str = malloc(filestat.st_size + 1);
     if (str == NULL) {
         char *emsg = "MEMORY ERROR: an error occurred\n";
-        write(2, emsg, strlen(emsg));
+        fputs(emsg, stderr);
         close(fd);
         return NULL;
     }
     if (read(fd, str, filestat.st_size) <= 0) {
         char *emsg = "ERROR: couldn't read file\n";
-        write(2, emsg, strlen(emsg));
+        fputs(emsg, stderr);
         free(str);
         close(fd);
         return NULL;
@@ -119,6 +118,10 @@ int main(int ac, char **av)
     map = create_map(str, i);
     free(str);
     rv = screen(map);
+    if (rv == 1) {
+        char *emsg = "an error occurred\n";
+        fputs(emsg, stderr);
+    }
     while (j < i) {
         free(map[j++]);
     }
