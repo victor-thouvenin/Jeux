@@ -8,7 +8,7 @@
 #include <iostream>
 #include "board.hpp"
 
-void update_arround(goban &gboard, int16 size, int16 x, int16 y, cell::direction &dr, int16 sign)
+void update_arround(goban &gboard, const int16 size, const int16 x, const int16 y, const cell::direction &dr, const int16 sign)
 {
     int16 dr_x = dr&1;
     int16 dr_y = dr < 0 ? -1 : dr >> 1;
@@ -18,7 +18,7 @@ void update_arround(goban &gboard, int16 size, int16 x, int16 y, cell::direction
     bool check1 = true;
     bool check2 = true;
 
-    auto check_dr = [sign, v](bool &check, int16 &nsign, int16 x, int16 y){
+    auto check_dr = [sign, dr](goban &gboard, bool &check, int16 &nsign, int16 v, const int16 x, const int16 y){
         cell &cell = gboard(x, y);
         v = cell;
         if (nsign == sign && v*nsign != cell::bad && v*nsign < 0)
@@ -34,12 +34,12 @@ void update_arround(goban &gboard, int16 size, int16 x, int16 y, cell::direction
     for (int16 i = 1; i < 5; i++) {
         check1 = check1 && x+ dr_x*i < size && y+ dr_y*i >= 0 && y+ dr_y*i < size;
         if (check1) {
-            check_dr(check1, sign1, x+ dr_x*i, y+ dr_y*i);
+            check_dr(gboard, check1, sign1, v, x+ dr_x*i, y+ dr_y*i);
         }
 
         check2 = check2 && x- dr_x*i >= 0 && y- dr_y*i >= 0 && y- dr_y*i < size;
         if (check2) {
-            check_dr(check2, sign2, x- dr_x*i, y- dr_y*i);
+            check_dr(gboard, check2, sign2, v, x- dr_x*i, y- dr_y*i);
         }
 
         if (!check1 && !check2)
@@ -57,7 +57,7 @@ void update_arround(goban &gboard, int16 size, int16 x, int16 y, cell::direction
     }
 }
 
-void find_max(goban &gboard, int16 x, int16 y, cell::direction dr, int16 &best, int16 sign, bool update)
+void find_max(goban &gboard, const int16 x, const int16 y, const cell::direction &dr, int16 &best, const int16 sign, const bool update)
 {
     int16 comb[] = {1, 2, 4, 8, 16};
     int16 dr_x = dr&1;
@@ -109,7 +109,7 @@ void find_max(goban &gboard, int16 x, int16 y, cell::direction dr, int16 &best, 
     }
 }
 
-void check_value(goban &gboard, int16 x, int16 y, bool p1)
+void check_value(goban &gboard, const int16 x, const int16 y, const bool p1)
 {
     int16 sign = p1 ? -1 : 1;
     int16 max = cell::bad;

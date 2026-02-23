@@ -8,7 +8,7 @@
 #include <vector>
 #include "board.hpp"
 
-std::vector<cell::comb> convert(int16 tab[5])
+std::vector<cell::comb> convert(int16 const tab[5])
 {
     std::vector<cell::comb> comb(5);
 

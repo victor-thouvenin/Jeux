@@ -23,7 +23,7 @@ cell &cell::operator=(const cell &cell)
     return *this;
 }
 
-void cell::score(std::vector<cell::comb> &comb, cell::direction &dr)
+void cell::score(const std::vector<cell::comb> &comb, const cell::direction &dr)
 {
     if (dr == none)
         return;
@@ -32,7 +32,7 @@ void cell::score(std::vector<cell::comb> &comb, cell::direction &dr)
     set_max(dr);
 }
 
-std::vector<cell::comb> &cell::score(cell::direction &dr)
+std::vector<cell::comb> &cell::score(const cell::direction &dr)
 {
     if (dr == none)
         throw "no direction";
@@ -48,7 +48,7 @@ int16 cell::max()
     return ind_max[ind];
 }
 
-void cell::set_max(cell::direction &dr)
+void cell::set_max(const cell::direction &dr)
 {
     if (dr == none)
         return;
@@ -68,7 +68,7 @@ int16 cell::find_best()
     return scr[best][ind_max[best]];
 }
 
-goban::goban(int16 size)
+goban::goban(const int16 size)
 {
     try {
         grid = new cell[size*size];
@@ -102,9 +102,10 @@ goban &goban::operator=(const goban &gboard)
     return *this;
 }
 
-int16 goban::find_highest(int16 sign, int16 highest)
+int16 goban::find_highest(const int16 sign, const int16 high)
 {
     int16 v;
+    int16 highest = high;
     int16 max = grid[highest]*sign;
     for (int i = 0; i < sz*sz; i++) {
         v = grid[i]*sign;
@@ -116,36 +117,41 @@ int16 goban::find_highest(int16 sign, int16 highest)
     return highest;
 }
 
-int16 goban::ennemi_highest(int16 x, int16 y)
+int16 goban::ennemi_highest(const int16 x, const int16 y)
 {
     if (x == -1 || y == -1)
         return ennemi_max;
-    if (grid[x + sz*y] != cell::bad && grid[x + sz*y] < 0 && (ennemi_max == -1 || grid[x + sz*y] < grid[ennemi_max]))
-        ennemi_max = x + sz*y;
+
+    int16 pos = x + sz*y;
+    if (grid[pos] != cell::bad && grid[pos] < 0 && (ennemi_max == -1 || grid[pos] < grid[ennemi_max]))
+        ennemi_max = pos;
     return ennemi_max;
 }
 
-int16 goban::ally_highest(int16 x, int16 y)
+int16 goban::ally_highest(const int16 x, const int16 y)
 {
     if (x == -1 || y == -1)
         return ally_max;
-    if (grid[x + sz*y] != -cell::bad && grid[x + sz*y] > 0 && (ally_max == -1 || grid[x + sz*y] > grid[ally_max]))
-        ally_max = x + sz*y;
+
+    int16 pos = x + sz*y;
+    if (grid[pos] != -cell::bad && grid[pos] > 0 && (ally_max == -1 || grid[pos] > grid[ally_max]))
+        ally_max = pos;
     return ally_max;
 }
 
-void goban::turn(int16 x, int16 y, int16 p)
+void goban::turn(const int16 x, const int16 y, const int16 p)
 {
+    int16 pos = x + sz*y;
     if (p == -1) {
-        if (grid[x + y*sz] != 0)
+        if (grid[pos] != 0)
             std::cerr << "cette case n'est pas libre" << std::endl;
         else
-            grid[x + y*sz].val = cell::here;
+            grid[pos].val = cell::here;
         return;
     }
-    if (grid[x + y*sz] != 0)
+    if (grid[pos] != 0)
         throw std::invalid_argument("not free spot");
-    grid[x + y*sz].val = p == 1 ? -1 : 1;
+    grid[pos].val = p == 1 ? -1 : 1;
     try {
         check_value(*this, x, y, p == 1);
     } catch (GameEnd &e) {

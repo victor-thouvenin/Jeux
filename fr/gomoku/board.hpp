@@ -44,15 +44,15 @@ public:
 
     cell() = default;
     ~cell() = default;
-    void operator=(int16 value) { val = value; };
+    void operator=(const int16 value) { val = value; };
     cell &operator=(const cell&);
     operator int16() { return val; };
-    void score(std::vector<comb> &, direction&);
-    std::vector<comb> &score(direction&);
+    void score(const std::vector<comb> &, const direction&);
+    std::vector<comb> &score(const direction&);
     int16 max();
-    void set_max(direction&);
+    void set_max(const direction&);
     int16 find_best();
-    void toward(direction& dr) { dir = dr; };
+    void toward(const direction &dr) { dir = dr; };
     direction &toward() { return dir; };
     friend class goban;
 private:
@@ -65,16 +65,16 @@ private:
 class goban {
 public:
     goban() = default;
-    goban(int16);
+    goban(const int16);
     ~goban();
     goban &operator=(const goban&);
-    cell &operator[](int16 pos) { return grid[pos]; };
-    cell &operator()(int16 x, int16 y) { return grid[x+ y*sz]; };
-    int16 find_highest(int16, int16);
-    int16 ennemi_highest(int16 x = -1, int16 y = -1);
-    int16 ally_highest(int16 x = -1, int16 y = -1);
+    cell &operator[](const int16 pos) { return grid[pos]; };
+    cell &operator()(const int16 x, const int16 y) { return grid[x+ y*sz]; };
+    int16 find_highest(const int16, const int16 high = 0);
+    int16 ennemi_highest(const int16 x = -1, const int16 y = -1);
+    int16 ally_highest(const int16 x = -1, const int16 y = -1);
     int16 size() { return sz; };
-    void turn(int16, int16, int16);
+    void turn(const int16, const int16, const int16);
     void print();
 private:
     cell *grid = NULL;
@@ -91,7 +91,7 @@ public:
         p1_won = 1,
         p2_won = 2,
     };
-    GameEnd(gameState s) {
+    GameEnd(const gameState &s) {
         st = s;
         switch (st) {
             case error:
@@ -108,7 +108,7 @@ public:
                 break;
         }
     };
-    GameEnd(gameState s, char const *str) { st = s; msg = str; };
+    GameEnd(const gameState &s, char const *str) { st = s; msg = str; };
     ~GameEnd() = default;
     gameState const &state() { return st; };
     char const *how() { return msg; };
@@ -117,7 +117,7 @@ private:
     char const *msg;
 };
 
-std::vector<cell::comb> convert(int16*);
-void find_max(goban &, int16, int16, cell::direction, int16 &, int16, bool update = true);
-void check_value(goban &, int16, int16, bool);
+std::vector<cell::comb> convert(int16 const *);
+void find_max(goban &, const int16, const int16, const cell::direction&, int16 &, const int16, const bool update = true);
+void check_value(goban &, const int16, const int16, const bool);
 void ai_plays(goban &);
