@@ -16,7 +16,7 @@ void print_map(game_t *game)
     int i = 0;
     int j = 0;
 
-    my_putstr("my positions:\n |A B C D E F G H\n-+---------------");
+    my_putstr("my boats:\n |A B C D E F G H\n-+---------------");
     while (i < 8) {
         my_printf("\n%i|%c", i + 1, game->player[i][j]);
         while (++j < 8)
@@ -24,7 +24,7 @@ void print_map(game_t *game)
         j = 0;
         ++i;
     }
-    my_putstr("\n\nenemy's positions:\n |A B C D E F G H\n-+---------------");
+    my_putstr("\n\nenemy's boats:\n |A B C D E F G H\n-+---------------");
     for (i = 0; i < 8; i++) {
         my_printf("\n%i|%c", i + 1, game->enemy[i][j]);
         while (++j < 8)
@@ -76,8 +76,6 @@ void check_end(game_t *game)
 
 int check_ans(game_t *game, int play)
 {
-    if (!usleep(1500000))
-        return puterror("connection error\n");
     if (!receive_signal(game))
         return 1;
     if (!play)
@@ -109,7 +107,7 @@ int game_loop(game_t *game, int play)
     if (game->end == 1)
         my_putstr("Enemy won\n");
     if (game->end == 2)
-        my_putstr("I won\n");
+        my_putstr("You won\n");
     get_next_line(-1);
     return (error ? error : game->end % 2);
 }

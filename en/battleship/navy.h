@@ -25,12 +25,11 @@ int send_signal(game_t *, int, int);
 void handle_sig(int, siginfo_t *, void *);
 
 int create_map(char *);
-int check_end(game_t *);
+void check_end(game_t *);
 
 char *get_next_line(int);
 int puterror(char const *);
 int my_getunbr(char const *);
-int my_strcmp(char const *, char const *);
 
 int start(struct sigaction *, game_t *, int);
 void setaction(struct sigaction *);

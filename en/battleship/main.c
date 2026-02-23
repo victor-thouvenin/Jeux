@@ -19,7 +19,7 @@ int log_p1(char *file)
     setaction(&sa);
     if (!create_map(file))
         return 1;
-    my_printf("my_pid: %i\n", getpid());
+    my_printf("PID: %i\n", getpid());
     if (sigaction(U2, &sa, NULL) == -1)
         return puterror("connection error\n");
     my_putstr("waiting for enemy connection...\n\n");
@@ -40,7 +40,7 @@ int log_p2(int pid, char *file)
     setaction(&sa);
     if (!create_map(file))
         return 1;
-    my_printf("my_pid: %i\n", getpid());
+    my_printf("PID: %i\n", getpid());
     kill(pid, U2);
     if (sigaction(U1, &sa, NULL) == -1)
         return puterror("connection error\n");

@@ -35,7 +35,7 @@ int check_file(char *str, int *size, int *b, int *e)
     int nb[4] = {0, 0, 0, 0};
 
     *size = str[0]-'0';
-    if (my_strlen(str) < 7 || size < 2 || size > 5 || str[1] != ':' || !(nb[size-2]^1))
+    if (my_strlen(str) < 7 || *size < 2 || *size > 5 || str[1] != ':' || !(nb[*size-2]^1))
         return 0;
     if (str[2] < 'A' || str[2] > 'H' || str[3] < '1' || str[3] > '8' || str[4] != ':')
         return 0;
