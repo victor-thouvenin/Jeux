@@ -50,7 +50,7 @@ Le jeu se joue à **deux joueurs**, chacun sur un terminal séparé.
 Lancer la première instance du jeu **avec le fichier de positions** :
 
 ```bash
-./bataille_navale positions_player1.txt
+./bataille_navale positions_joueur1.txt
 ```
 
 Le programme affichera le **PID** du joueur 1 (à communiquer au joueur 2).
@@ -60,7 +60,7 @@ Le programme affichera le **PID** du joueur 1 (à communiquer au joueur 2).
 Lancer la deuxième instance du jeu **en précisant le PID du joueur 1** et son propre fichier de positions :
 
 ```bash
-./bataille_navale <pid_joueur1> positions_player2.txt
+./bataille_navale <pid_joueur1> positions_joueur2.txt
 ```
 
 ---
@@ -103,9 +103,9 @@ Chaque ligne correspond à un bateau avec le format suivant :
 ### 1️⃣ Joueur 1
 
 ```bash
-> ./bataille_navale positions_player1.txt
+> ./bataille_navale positions_joueur1.txt
 PID: 51644
-En attente de l'ennemi...
+En attente de l'ennemi ...
 
 enemi connecté
 
@@ -139,7 +139,7 @@ attaque :
 ### 2️⃣ Joueur 2
 
 ```bash
-> ./bataille_navale 51644 positions_player2.txt
+> ./bataille_navale 51644 positions_joueur2.txt
 PID: 52654
 connecté
 
@@ -167,7 +167,7 @@ bateaux enemis :
 7|. . . . . . . .
 8|. . . . . . . .
 
-en attente de l'attaque de l'ennemie...
+en attente de l'attaque de l'ennemie ...
 ```
 
 ---
