@@ -101,7 +101,7 @@ int create_map(char *file)
     int fd = open(file, O_RDONLY);
 
     if (fd == -1) {
-        dprintf(2, "le fichier %s n'a pas été trouvé ou n'a pas pu être ouvert\n", file);
+        dprintf(2, "le fichier %s n'a pas pu être ouvert\n", file);
         return 0;
     }
     if ((!fill_map(fd, file)) | (close(fd) == -1))
