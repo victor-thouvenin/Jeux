@@ -45,14 +45,16 @@ int check_str(char *str)
     int o = 0;
 
     while (str[j]) {
-        if (j != 0 && (str[j-1] != '\n' && str[j] == '\n') && (str[j] == '\n' || str[j+1] == '\0'))
+        if ((j == 0 || str[j-1] == '\n') && str[j] != '\n')
             ++i;
         else if (str[j] != 'P' && str[j] != 'O' && str[j] != 'X' && str[j] != ' ' && str[j] != '#' && str[j] != '\n')
             return -1;
         switch (str[j])
         {
         case 'P':
-            ++p;
+            if (p)
+                return -1;
+            p = 1;
             break;
         case 'O':
             ++o;
@@ -61,11 +63,9 @@ int check_str(char *str)
             --o;
             break;
         }
-        if (p > 2)
-            return -1;
         ++j;
     }
-    if (p == 0 || o > 0)
+    if (!p || o > 0)
         return -1;
     return i;
 }

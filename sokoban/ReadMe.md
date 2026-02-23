@@ -8,13 +8,11 @@ Chaque déplacement doit être réfléchi, car il est impossible de tirer les bo
 
 ## ⚠️ Avertissement épilepsie
 
-Ce jeu utilise un affichage rafraîchi en temps réel dans le terminal.
+Ce jeu utilise un affichage en console rafraîchi après chaque action.
 Lorsqu’on déplace rapidement le joueur ou les boîtes, l’écran peut **clignoter à haute fréquence** selon la configuration du terminal ou du système.
-👉 **Il est déconseillé de jouer si vous êtes sensible aux lumières ou aux effets visuels rapides (photosensibilité / épilepsie).**
+👉 **Il est déconseillé de jouer (ou conseillé de jouer lentement) si vous êtes sensible aux lumières ou aux effets visuels rapides (photosensibilité / épilepsie).**
 Pour réduire les effets :
-- Diminuez la taille du terminal
-- Évitez de maintenir les touches de déplacement appuyées
-- Réduisez la vitesse d’animation dans le code si besoin
+- Évitez de maintenir les touches de déplacement appuyées ou d'appuyer trop rapidement dessus
 
 ---
 
@@ -43,7 +41,7 @@ Pour réduire les effets :
 Sur Debian/Ubuntu :
 ```bash
 sudo apt-get install libncurses6 libncurses-dev libncursesw6
-````
+```
 
 ### Compilation
 
@@ -51,7 +49,7 @@ Le projet est fourni avec un **Makefile**. Pour compiler :
 
 ```bash
 make
-````
+```
 
 Cela génère l’exécutable :
 
@@ -103,11 +101,11 @@ La carte est un fichier texte où chaque caractère représente une case. Les li
 
 ## 🎮 Contrôles
 
-| Touche             | Action                                               |
-| ------------------ | ---------------------------------------------------- |
-| Flèches (↑ ↓ ← →)  | Déplacer le joueur / pousser une boîte (si possible) |
-| ` ` (Espace)        | Recommencer le niveau        |
-| Touche `Fin` ou `Q` | Quitter le jeu    |
+| Touche              | Action                                               |
+| ------------------- | ---------------------------------------------------- |
+| Flèches (↑ ↓ ← →)   | Déplacer le joueur / pousser une boîte (si possible) |
+| ` ` (Espace)        | Recommencer le niveau                                |
+| Touche `Fin` ou `Q` | Quitter le jeu                                       |
 
 ---
 
@@ -130,7 +128,7 @@ La carte est un fichier texte où chaque caractère représente une case. Les li
 #######
 ```
 
-➡️ Déplacez `P` vers la droite.
+➡️ Le joueur appuie sur la flèche de droite.
 
 ```
 #######
@@ -140,7 +138,7 @@ La carte est un fichier texte où chaque caractère représente une case. Les li
 #######
 ```
 
-➡️ Déplacez `P` vers le haut pour pousser `X` sur `O`.
+➡️ Le joueur appuie sur la flèche du haut pour pousser `X` sur `O`.
 
 ```
 #######

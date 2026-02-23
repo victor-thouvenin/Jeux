@@ -66,8 +66,8 @@ char **create_map(char *str, int size) {
     int j = 0;
     char **tab = malloc(sizeof(char*)*(size+1));
 
-    while (str[i + i2] != '\0') {
-        if (str[i + i2] != '\n')
+    while (str[i+i2] != '\0') {
+        if (str[i+i2] != '\n')
             ++i;
         else if (i != 0) {
             tab[j] = strndup(str+i2, i);
@@ -78,7 +78,7 @@ char **create_map(char *str, int size) {
                 return NULL;
             }
             ++j;
-            i2 += i + 1;
+            i2 += i+1;
             i = 0;
         }
         else
