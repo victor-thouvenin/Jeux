@@ -7,18 +7,19 @@
 
 #include <iostream>
 #include "board.hpp"
+#include "game_end.hpp"
 
-void find_best_move(goban &gboard, int16 pos, cell &cell, int16 comb, int16 val)
+void find_best_move(goban &gboard, const int16 pos, cell &cell, const int16 comb, const int16 val)
 {
-    int16 size = gboard.size();
-    cell::direction &dr = cell.toward();
+    const int16 size = gboard.size();
+    const cell::direction &dr = cell.toward();
     int16 x = pos%size;
     int16 y = pos/size;
-    int16 dr_x = dr&1;
-    int16 dr_y = dr < 0 ? -1 : dr >> 1;
-    int16 max = cell.max();
+    const int16 dr_x = dr&1;
+    const int16 dr_y = dr < 0 ? -1 : dr >> 1;
+    const int16 max = cell.max();
 
-    auto play_pos = [&gboard, &size, &x, &y, &dr_x, &dr_y](int16 dlt, int16 dlt2) {
+    auto play_pos = [&gboard, size, &x, &y, dr_x, dr_y](int16 dlt, int16 dlt2) {
         x += dlt*dr_x;
         y += dlt*dr_y;
         if (x < 0 || x >= size || y < 0 || y >= size || gboard(x, y) != 0) {
@@ -97,11 +98,11 @@ void find_best_move(goban &gboard, int16 pos, cell &cell, int16 comb, int16 val)
             break;
 
         default :
-            if (gboard(gboard.size()/2, gboard.size()/2) == 0) {
-                x = gboard.size()/2, y = gboard.size()/2;
+            if (gboard(size/2, size/2) == 0) {
+                x = size/2, y = size/2;
                 break;
             }
-            for (pos = 0; pos < size*size; pos++) {
+            for (int pos = 0; pos < size*size; pos++) {
                 if (gboard[pos] == 0) {
                     x = pos%size;
                     y = pos/size;
@@ -117,7 +118,7 @@ void find_best_move(goban &gboard, int16 pos, cell &cell, int16 comb, int16 val)
     } catch (GameEnd &e) {
         std::cout << x+1 << ' ' << y+1 << std::endl;
         if (e.state() == GameEnd::p2_won)
-            throw GameEnd(GameEnd::p2_won, "j'ai gagné. mwahaha");
+            throw GameEnd(GameEnd::p2_won, msg_list["AI_won"].c_str());
         else
             throw;
     }
@@ -125,8 +126,8 @@ void find_best_move(goban &gboard, int16 pos, cell &cell, int16 comb, int16 val)
 
 void ai_plays(goban &gboard)
 {
-    int16 apos = gboard.ally_highest();
-    int16 epos = gboard.ennemi_highest();
+    const int16 apos = gboard.ally_highest();
+    const int16 epos = gboard.ennemi_highest();
     cell acell;
     cell ecell;
     int16 amax = cell::bad;

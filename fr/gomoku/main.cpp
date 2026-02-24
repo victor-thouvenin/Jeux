@@ -9,22 +9,23 @@
 #include <cstring>
 #include "board.hpp"
 #include "getnbr.hpp"
+#include "game_end.hpp"
 
-int read_input(int16 size, int16 &x, int16 &y, int16 pl)
+int read_input(const int16 size, int16 &x, int16 &y, const int16 pl)
 {
     std::string str;
 
     if (pl == 0)
-        std::cout << "tour du joueur > ";
+        std::cout << msg_list["player_turn"] << "> ";
     else
-        std::cout << "tour du joueur " << pl << " > ";
+        std::cout << msg_list["player_turn"] << pl << " > ";
     std::getline(std::cin, str);
 
     if (str == "")
-        throw std::invalid_argument("mauvais format de coordonnées");
-    if (str == "commence")
+        throw std::invalid_argument(msg_list["error_coordinate_format"]);
+    if (str == msg_list["start"])
         return 2;
-    if (str == "stop")
+    if (str == msg_list["end"])
         throw GameEnd(GameEnd::tie, "");
 
     auto find_coord = [size, &x, &y](std::string &str){
@@ -32,7 +33,7 @@ int read_input(int16 size, int16 &x, int16 &y, int16 pl)
         str.erase(str.find_last_not_of(' ')+1);
         size_t i = str.find(' ');
         if (i == std::string::npos)
-            throw std::invalid_argument("mauvais format de coordonnées");
+            throw std::invalid_argument(msg_list["error_coordinate_format"]);
 
         std::string lstr = str.substr(0, i);
         std::string rstr = str.substr(str.rfind(' ')+1);
@@ -40,12 +41,12 @@ int read_input(int16 size, int16 &x, int16 &y, int16 pl)
             x = getnbr<int16>(lstr.c_str())-1;
             y = getnbr<int16>(rstr.c_str())-1;
         } catch (...) {
-            throw std::invalid_argument("mauvais format de coordonnées");
+            throw std::invalid_argument(msg_list["error_coordinate_format"]);
         }
         if (x >= size || x < 0 || y >= size || y < 0)
-            throw std::invalid_argument("mauvais format de coordonnées");
+            throw std::invalid_argument(msg_list["error_coordinate_format"]);
     };
-    size_t i = str.find("où");
+    size_t i = str.find(msg_list["where"]);
     if (i != std::string::npos) {
         try {
             find_coord(str.erase(0, i+3));
@@ -62,9 +63,10 @@ int read_input(int16 size, int16 &x, int16 &y, int16 pl)
     return 0;
 }
 
-int game_loop(goban &gboard, bool multi) {
+int game_loop(goban &gboard, const bool multi) {
     int16 x, y;
     int16 pl = 0;
+    msg_list["error_coordinate_range"].insert(62, std::to_string(gboard.size()));
     while (1) {
         gboard.print();
         try {
@@ -74,13 +76,13 @@ int game_loop(goban &gboard, bool multi) {
                     continue;
                 case 2:
                     if (multi)
-                        std::cerr << "il n'y a pas d'IA en mode multijoueur" << std::endl;
+                        std::cerr << msg_list["error_multiplayer_AI"] << std::endl;
                     else if (gboard.ally_highest() != -1 || gboard.ennemi_highest() != -1)
-                        std::cerr << "la partie a déjà commencé" << std::endl;
+                        std::cerr << msg_list["error_game_began"] << std::endl;
                     else {
                         x = gboard.size()/2, y = gboard.size()/2;
                         gboard.turn(x, y, 0);
-                        std::cout << "l'IA a joué " << y+1 << ',' << x+1 << std::endl;
+                        std::cout << msg_list["AI_plays"] << y+1 << ',' << x+1 << std::endl;
                     }
                     continue;
             }
@@ -91,13 +93,13 @@ int game_loop(goban &gboard, bool multi) {
                 std::cout << std::endl;
                 return 0;
             }
-            std::cerr << "ERREUR: les coordonnées doivent être des nombres entre 1 et " << gboard.size() << " au format \"x y\"" << std::endl;
+            std::cerr << msg_list["error_coordinate_range"] << std::endl;
             continue;
         }
         try {
             gboard.turn(x, y, pl+1);
         } catch (std::invalid_argument &e) {
-            std::cerr << "ERREUR: cette case n'est pas libre, action impossible" << std::endl;
+            std::cerr << msg_list["error_not_free_spot"] << std::endl;
             continue;
         } catch (GameEnd &e) {
             if (e.state() == GameEnd::error) {
@@ -105,12 +107,12 @@ int game_loop(goban &gboard, bool multi) {
                 return 1;
             }
             gboard.print();
-            std::cout << (multi || e.state() == GameEnd::tie ? e.how() : "j'ai perdu. snif") << std::endl;
+            std::cout << (multi || e.state() == GameEnd::tie ? e.how() : msg_list["AI_lost"]) << std::endl;
             return 0;
         }
         if (!multi) {
             gboard.print();
-            std::cout << "tour de l'IA > ";
+            std::cout << msg_list["AI_turn"];
             try {
                 ai_plays(gboard);
             } catch (GameEnd &e) {
@@ -131,37 +133,31 @@ int main(int ac, char **av)
 {
     int16 size;
     if (ac < 2){
-        std::cerr << "ERREUR : taille de la grille manquant" << std::endl;
+        std::cerr << msg_list["error_missing_parameter"] << std::endl;
         return 1;
     }
     try {
         size = getnbr<__int8_t>(av[1]);
     } catch (std::out_of_range &e) {
-        std::cerr << "ERREUR : taille non prise en charge : grille trop grande" << std::endl;
+        std::cerr << msg_list["error_big_grid"] << std::endl;
         return 1;
     } catch (std::invalid_argument &e) {
-        std::cerr << "ERREUR : taille non prise en charge : la taille doit être un nombre" << std::endl;
+        std::cerr << msg_list["error_not_number_size"] << std::endl;
         return 1;
     } if (size < 5) {
-        std::cerr << "ERREUR : taille non prise en charge : grille trop petite" << std::endl;
+        std::cerr << msg_list["error_small_grid"] << std::endl;
         return 1;
     }
 
-    goban gboard;
-    try {
-        goban b(size);
-        gboard = b;
-    } catch (...) {
-        std::cerr << "Erreur de mémoire : impossible de créer le plateau" << std::endl;
+    if (ac > 2 && std::strcmp(av[2], "-multi") != 0) {
+        std::cerr << msg_list["error_option"] << av[2] << std::endl;
         return 1;
     }
-    if (ac > 2) {
-        if (std::strcmp(av[2], "-multi") == 0)
-            return game_loop(gboard, true);
-        else {
-            std::cerr << "ERREUR : option inconnue : " << av[2] << std::endl;
-            return 1;
-        }
+    try {
+        goban gboard(size);
+        return game_loop(gboard, ac > 2);
+    } catch (...) {
+        std::cerr << msg_list["error_memory"] << std::endl;
+        return 1;
     }
-    return game_loop(gboard, false);
 }

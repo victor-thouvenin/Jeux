@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include "board.hpp"
+#include "game_end.hpp"
 
 void update_arround(goban &gboard, const int16 size, const int16 x, const int16 y, const cell::direction &dr, const int16 sign)
 {
@@ -26,7 +27,7 @@ void update_arround(goban &gboard, const int16 size, const int16 x, const int16 
         v *= nsign;
         check = v != -cell::bad && v >= 0;
         if (check && v > 0) {
-            find_max(gboard, x, y, dr, v, nsign, false);
+            find_max(gboard, size, x, y, dr, v, nsign, false);
             cell.set_max(dr);
             cell = cell.find_best()*nsign;
         }
@@ -57,14 +58,14 @@ void update_arround(goban &gboard, const int16 size, const int16 x, const int16 
     }
 }
 
-void find_max(goban &gboard, const int16 x, const int16 y, const cell::direction &dr, int16 &best, const int16 sign, const bool update)
+void find_max(goban &gboard, const int16 size, const int16 x, const int16 y, const cell::direction &dr, int16 &best, const int16 sign, const bool update)
 {
     int16 comb[] = {1, 2, 4, 8, 16};
-    int16 dr_x = dr&1;
-    int16 dr_y = dr < 0 ? -1 : dr >> 1;
-    int16 size = gboard.size();
+    const int16 dr_x = dr&1;
+    const int16 dr_y = dr < 0 ? -1 : dr >> 1;
     int16 v1 = 0;
     int16 v2 = 0;
+
     for (int16 i = 1; i < 5; i++) {
         v1 = (v1 >= 0 && x+ dr_x*i < size && y+ dr_y*i >= 0 && y+ dr_y*i < size) ? gboard(x+ dr_x*i, y+ dr_y*i)*sign : -1;
         if (v1 == 15 || v1 == -15)
@@ -91,13 +92,15 @@ void find_max(goban &gboard, const int16 x, const int16 y, const cell::direction
         if ((comb[0] & comb[1] & comb[2] & comb[3] & comb[4]) == -1 || (v1 < 0 && v2 < 0))
             break;
     }
-    std::vector<cell::comb> score = convert(comb);
+
+    const std::vector<cell::comb> score = convert(comb);
     gboard(x, y).score(score, dr);
     int16 max = MAX(MAX(MAX(score[0], score[1]), MAX(score[2], score[3])), score[4]);
     if (max > best) {
         best = max;
         gboard(x, y).toward(dr);
     }
+
     if (update) {
         update_arround(gboard, size, x, y, dr, sign);
         if (best == cell::win) {
@@ -111,13 +114,14 @@ void find_max(goban &gboard, const int16 x, const int16 y, const cell::direction
 
 void check_value(goban &gboard, const int16 x, const int16 y, const bool p1)
 {
-    int16 sign = p1 ? -1 : 1;
+    const int16 size = gboard.size();
+    const int16 sign = p1 ? -1 : 1;
     int16 max = cell::bad;
     try {
-        find_max(gboard, x, y, cell::horizontal, max, sign);
-        find_max(gboard, x, y, cell::vertical, max, sign);
-        find_max(gboard, x, y, cell::dr_diagonal, max, sign);
-        find_max(gboard, x, y, cell::ur_diagonal, max, sign);
+        find_max(gboard, size, x, y, cell::horizontal, max, sign);
+        find_max(gboard, size, x, y, cell::vertical, max, sign);
+        find_max(gboard, size, x, y, cell::dr_diagonal, max, sign);
+        find_max(gboard, size, x, y, cell::ur_diagonal, max, sign);
     } catch (GameEnd &e) {
         throw;
     }

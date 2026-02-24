@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include "board.hpp"
+#include "game_end.hpp"
 
 cell &cell::operator=(const cell &cell)
 {
@@ -84,24 +85,6 @@ goban::~goban()
         delete[] grid;
 }
 
-goban &goban::operator=(const goban &gboard)
-{
-    int16 size = gboard.sz;
-    if (sz != gboard.sz) {
-        if (grid != NULL)
-            delete[] grid;
-        try {
-            grid = new cell[size*size];
-        } catch (...) {
-            throw;
-        }
-    }
-    for (int i = 0; i < size*size; i++)
-        grid[i] = gboard.grid[i];
-    sz = gboard.sz;
-    return *this;
-}
-
 int16 goban::find_highest(const int16 sign, const int16 high)
 {
     int16 v;
@@ -144,7 +127,7 @@ void goban::turn(const int16 x, const int16 y, const int16 p)
     int16 pos = x + sz*y;
     if (p == -1) {
         if (grid[pos] != 0)
-            std::cerr << "cette case n'est pas libre" << std::endl;
+            std::cerr << msg_list["error_here_not_free"] << std::endl;
         else
             grid[pos].val = cell::here;
         return;
