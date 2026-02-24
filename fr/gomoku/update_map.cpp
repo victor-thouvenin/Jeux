@@ -19,7 +19,7 @@ void update_arround(goban &gboard, const int16 size, const int16 x, const int16 
     bool check1 = true;
     bool check2 = true;
 
-    auto check_dr = [sign, dr](goban &gboard, bool &check, int16 &nsign, int16 v, const int16 x, const int16 y){
+    auto check_dr = [size, sign, dr](goban &gboard, bool &check, int16 &nsign, int16 v, const int16 x, const int16 y){
         cell &cell = gboard(x, y);
         v = cell;
         if (nsign == sign && v*nsign != cell::bad && v*nsign < 0)

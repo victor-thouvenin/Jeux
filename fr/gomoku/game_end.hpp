@@ -14,16 +14,16 @@ public:
         st = s;
         switch (st) {
             case error:
-                msg = msg_list["error_general"];
+                msg = msg_list["error_general"].c_str();
                 break;
             case tie:
-                msg = msg_list["tie"];
+                msg = msg_list["tie"].c_str();
                 break;
             case p1_won:
-                msg = msg_list["player1_win"];
+                msg = msg_list["player1_win"].c_str();
                 break;
             case p2_won:
-                msg = msg_list["player2_win"];
+                msg = msg_list["player2_win"].c_str();
                 break;
         }
     };
