@@ -22,17 +22,8 @@ namespace msg {
         bool operator!=(const char *str) const { return std::strcmp(str, ind) != 0; };
     };
 
-    static const int msg_num = 26;
+    static const int msg_num = 28;
     static constexpr const std::array<lang_list<lang_num>, msg_num> msg_list{
-        "change_lang", {
-            {{"fr", "langue changée en français"},
-            {"en", "changing language to english"}}},
-        "player_turn", {
-            {{"fr", "tour du joueur > "},
-            {"en", "your turn > "}}},
-        "multi_player_turn", {
-            {{"fr", "tour du joueur {} > "},
-            {"en", "player {}'s turn > "}}},
         "start", {
             {{"fr", "commence"},
             {"en", "begin"}}},
@@ -42,6 +33,22 @@ namespace msg {
         "where", {
             {{"fr", "où"},
             {"en", "where"}}},
+        "lang", {
+            {{"fr", "langue"},
+            {"en", "language"}}},
+
+        "no_change_lang", {
+            {{"fr", "le jeu est déjà en français"},
+            {"en", "the game is already english"}}},
+        "change_lang", {
+            {{"fr", "langue changée en français"},
+            {"en", "changing language to english"}}},
+        "player_turn", {
+            {{"fr", "tour du joueur > "},
+            {"en", "your turn > "}}},
+        "multi_player_turn", {
+            {{"fr", "tour du joueur {} > "},
+            {"en", "player {}'s turn > "}}},
         "player1_win", {
             {{"fr", "le joueur 1 a gagné. bravo!"},
             {"en", "player 1 won. good job!"}}},

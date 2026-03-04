@@ -12,12 +12,26 @@
 #include "getnbr.hpp"
 
 bool is_lang(const std::string &str) {
+    if (str == msg::lang)
+        return true;
     auto begin = msg::langs.begin();
     auto end = msg::langs.end();
     while (*begin != str && begin != end) {
         ++begin;
     }
     return begin != end;
+}
+
+void print_lang() {
+    std::string list;
+    auto begin = msg::langs.begin();
+    auto end = msg::langs.end();
+    while (begin != end) {
+        list += *begin;
+        if (++begin != end)
+            list += ", ";
+    }
+    std::cout << list << std::endl;
 }
 
 int read_input(const int16 size, int16 &x, int16 &y, const int16 pl)
@@ -36,9 +50,16 @@ int read_input(const int16 size, int16 &x, int16 &y, const int16 pl)
         return 2;
     if (str == get_msg("end"))
         throw GameEnd(GameEnd::tie, "");
-    if (is_lang(str.c_str())) {
-        msg::lang = str;
-        std::cout << get_msg("change_lang") << std::endl;
+    if (str == get_msg("lang")) {
+        print_lang();
+        return 3;
+    } if (is_lang(str.c_str())) {
+        if (str == msg::lang)
+            std::cout << get_msg("no_change_lang") << std::endl;
+        else {
+            msg::lang = str;
+            std::cout << get_msg("change_lang") << std::endl;
+        }
         return 3;
     }
 
@@ -61,9 +82,10 @@ int read_input(const int16 size, int16 &x, int16 &y, const int16 pl)
             throw std::invalid_argument(get_msg("error_coordinate_format"));
     };
     size_t i = str.find(get_msg("where"));
+    size_t i2 = str.find(" ", i);
     if (i != std::string::npos) {
         try {
-            find_coord(str.erase(0, i+3));
+            find_coord(str.erase(0, i2));
         } catch (...) {
             throw;
         }
@@ -80,8 +102,8 @@ int read_input(const int16 size, int16 &x, int16 &y, const int16 pl)
 int game_loop(goban &gboard, const bool multi) {
     int16 x, y;
     int16 pl = 0;
+    gboard.print();
     while (1) {
-        gboard.print();
         try {
             switch (read_input(gboard.size(), x, y, pl+multi)) {
                 case 1:
@@ -96,6 +118,7 @@ int game_loop(goban &gboard, const bool multi) {
                         x = gboard.size()/2, y = gboard.size()/2;
                         gboard.turn(x, y, 0);
                         std::cout << get_msg("AI_plays", y+1, x+1) << std::endl;
+                        gboard.print();
                     }
                     continue;
                 case 3:
@@ -140,6 +163,7 @@ int game_loop(goban &gboard, const bool multi) {
                 return 0;
             }
         }
+        gboard.print();
         pl ^= multi;
     }
 }

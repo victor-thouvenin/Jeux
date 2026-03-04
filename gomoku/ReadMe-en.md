@@ -92,6 +92,8 @@ During the game, players interact with the program using text commands:
 | `[x y]`           | coordinates of the cell (e.g., `7 8`)       | Play at coordinates `(x, y)`                            |
 | `where [x y]`     | coordinates of the cell (e.g., `where 7 8`) | highlight the cell at coordinates `(x, y)` *(not considered an action)* |
 | `end` or `Ctrl+D` | *(none)*                                    | Exit the game properly                                  |
+| `[language]`      | language (e.g., `en`)                       | change the game language *(french by default)* *(not considered an action)* |
+| `language`        | *(none)*                                    | lists the available languages *(not considered an action)* |
 
 ---
 
@@ -99,6 +101,25 @@ During the game, players interact with the program using text commands:
 
 ```
 $ ./gomoku 15
++-------------------------------+
+| . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . |
++-------------------------------+
+tour du joueur > en
+changing language to english
 +-------------------------------+
 | . . . . . . . . . . . . . . . |
 | . . . . . . . . . . . . . . . |

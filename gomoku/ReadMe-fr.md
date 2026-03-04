@@ -72,8 +72,10 @@ Lancez le programme avec la commande :
 | --------------------- | ----------------------------------------- | ------------------------------------------------------------- |
 | `commence`            | *(aucun)*                                 | Laisse l’IA commencer la partie *(mode solo uniquement)*      |
 | `[x y]`               | coordonnées de la case (ex : `7 8`)       | joue à l'emplacement demandé                                  |
-| `où [x y]`            | coordonnées de la case (ex : `où 7 8`)    | Indique l'emplacement de la case demandée *(n'est pas compté comme une action)* |
+| `où [x y]`            | coordonnées de la case (ex : `où 7 8`)    | Indique l'emplacement de la case demandée sur la grille *(n'est pas compté comme une action)* |
 | `stop` ou `Ctrl+D`    | *(aucun)*                                 | Termine la partie proprement                                  |
+| `[langue]`            | langue (ex : `fr`)                        | change la langue du jeu *(n'est pas compté comme une action)* |
+| `langue`              | *(aucun)*                                 | liste les langues disponibles *(n'est pas compté comme une action)* |
 
 Les autres actions (gestion des tours, affichage du plateau, détection de victoire) sont automatiques.
 
@@ -83,6 +85,25 @@ Les autres actions (gestion des tours, affichage du plateau, détection de victo
 
 ```
 $ ./gomoku 15
++-------------------------------+
+| . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . |
++-------------------------------+
+tour du joueur > fr
+le jeu est déjà en français
 +-------------------------------+
 | . . . . . . . . . . . . . . . |
 | . . . . . . . . . . . . . . . |

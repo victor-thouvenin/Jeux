@@ -128,8 +128,10 @@ void goban::turn(const int16 &x, const int16 &y, const int16 &p)
     if (p == -1) {
         if (grid[pos] != 0)
             std::cerr << get_msg("error_here_not_free") << std::endl;
-        else
+        else {
             grid[pos].val = cell::here;
+            print();
+        }
         return;
     }
     if (grid[pos] != 0)
