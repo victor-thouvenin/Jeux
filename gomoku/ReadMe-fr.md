@@ -15,12 +15,13 @@ Le but est d’être le premier à aligner **cinq pions consécutifs** horizonta
   - `commence` : laisse l’IA commencer la partie
   - `où [x y]` : montre l'emplacement de la case aux coordonnées données
   - `stop` (ou `Ctrl+D`) : termine la partie
+- Choix de la langue (à l'exécution ou pendant la partie)
 
 ---
 
 ## ⚙️ Compilation
 
-Assurez-vous d’avoir un compilateur **g++ 17** ou supérieur.
+Assurez-vous d’avoir un compilateur **g++ 20** ou supérieur.
 
 Pour compiler le programme, exécutez simplement :
 
@@ -64,6 +65,12 @@ Lancez le programme avec la commande :
 
 → Lance une partie à deux joueurs sur une grille 15×15
 
+```bash
+./gomoku 15 -lang=fr
+```
+
+→ Lance une partie sur une grille **15×15** en français *(le français est la langue par défaut du jeu)*
+
 ---
 
 ## 🎮 Commandes en jeu
@@ -104,23 +111,6 @@ $ ./gomoku 15
 +-------------------------------+
 tour du joueur > fr
 le jeu est déjà en français
-+-------------------------------+
-| . . . . . . . . . . . . . . . |
-| . . . . . . . . . . . . . . . |
-| . . . . . . . . . . . . . . . |
-| . . . . . . . . . . . . . . . |
-| . . . . . . . . . . . . . . . |
-| . . . . . . . . . . . . . . . |
-| . . . . . . . . . . . . . . . |
-| . . . . . . . . . . . . . . . |
-| . . . . . . . . . . . . . . . |
-| . . . . . . . . . . . . . . . |
-| . . . . . . . . . . . . . . . |
-| . . . . . . . . . . . . . . . |
-| . . . . . . . . . . . . . . . |
-| . . . . . . . . . . . . . . . |
-| . . . . . . . . . . . . . . . |
-+-------------------------------+
 tour du joueur > commence
 l'IA a joué 8,8
 +-------------------------------+

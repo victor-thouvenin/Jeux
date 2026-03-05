@@ -34,6 +34,15 @@ void print_lang() {
     std::cout << list << std::endl;
 }
 
+void change_lang(const std::string &str, bool print = true) {
+    if (str == msg::lang)
+        std::cout << get_msg("no_change_lang") << std::endl;
+    else if (print) {
+        msg::lang = str;
+        std::cout << get_msg("change_lang") << std::endl;
+    }
+}
+
 int read_input(const int16 size, int16 &x, int16 &y, const int16 pl)
 {
     std::string str;
@@ -44,6 +53,8 @@ int read_input(const int16 size, int16 &x, int16 &y, const int16 pl)
         std::cout << get_msg("multi_player_turn", pl);
     std::getline(std::cin, str);
 
+    str.erase(0, str.find_first_not_of(' '));
+    str.erase(str.find_last_not_of(' ')+1);
     if (str == "")
         throw std::invalid_argument(get_msg("error_coordinate_format"));
     if (str == get_msg("start"))
@@ -54,18 +65,11 @@ int read_input(const int16 size, int16 &x, int16 &y, const int16 pl)
         print_lang();
         return 3;
     } if (is_lang(str.c_str())) {
-        if (str == msg::lang)
-            std::cout << get_msg("no_change_lang") << std::endl;
-        else {
-            msg::lang = str;
-            std::cout << get_msg("change_lang") << std::endl;
-        }
+        change_lang(str);
         return 3;
     }
 
     auto find_coord = [size, &x, &y](std::string &str){
-        str.erase(0, str.find_first_not_of(' '));
-        str.erase(str.find_last_not_of(' ')+1);
         size_t i = str.find(' ');
         if (i == std::string::npos)
             throw std::invalid_argument(get_msg("error_coordinate_format"));
@@ -168,36 +172,66 @@ int game_loop(goban &gboard, const bool multi) {
     }
 }
 
+void print_error_all_lang(const std::array<std::string, msg::lang_num> &list) {
+    for (const auto &msg : list) {
+        std::cerr << msg << std::endl;
+    }
+}
+
+bool check_param(int ac, char **av, int i, bool &multi) {
+    multi = std::strcmp(av[i], "-multi") == 0;
+    bool lang = std::strncmp(av[i], "-lang=", 6) == 0;
+    if (!multi && !lang) {
+        print_error_all_lang(get_msg_all_lang("error_option", av[i]));
+        // std::cerr << get_msg("error_option", av[i]) << std::endl;
+        return false;
+    } else if (lang) {
+        if (is_lang(av[i]+6))
+            change_lang(av[i]+6, false);
+        else {
+            print_error_all_lang(get_msg_all_lang("error_lang", av[i]+6));
+            // std::cerr << get_msg("error_lang", av[i]+6) << std::endl;
+            return false;
+        }
+    }
+    return (i+1 == ac || check_param(ac, av, i+1, multi));
+}
+
 int main(int ac, char **av)
 {
     int16 size;
     if (ac < 2){
-        std::cerr << get_msg("error_missing_parameter") << std::endl;
+        print_error_all_lang(get_msg_all_lang("error_missing_parameter"));
+        // std::cerr << get_msg_all_lang("error_missing_parameter") << std::endl;
         return 1;
     }
     try {
         size = getnbr<__int8_t>(av[1]);
     } catch (std::out_of_range &e) {
-        std::cerr << get_msg("error_big_grid") << std::endl;
+        print_error_all_lang(get_msg_all_lang("error_big_grid"));
+        // std::cerr << get_msg_all_lang("error_big_grid") << std::endl;
         return 1;
     } catch (std::invalid_argument &e) {
-        std::cerr << get_msg("error_not_number_size") << std::endl;
+        print_error_all_lang(get_msg_all_lang("error_not_number_size"));
+        // std::cerr << get_msg_all_lang("error_not_number_size") << std::endl;
         return 1;
     } if (size < 0) {
-        std::cerr << get_msg("error_not_number_size") << std::endl;
+        print_error_all_lang(get_msg_all_lang("error_not_number_size"));
+        // std::cerr << get_msg_all_lang("error_not_number_size") << std::endl;
         return 1;
     } if (size < 5) {
-        std::cerr << get_msg("error_small_grid") << std::endl;
+        print_error_all_lang(get_msg_all_lang("error_small_grid"));
+        // std::cerr << get_msg_all_lang("error_small_grid") << std::endl;
         return 1;
     }
 
-    if (ac > 2 && std::strcmp(av[2], "-multi") != 0) {
-        std::cerr << get_msg("error_option", av[2]) << std::endl;
+    bool multi = false;
+    if (ac > 2 && !check_param(ac, av, 2, multi)) {
         return 1;
     }
     try {
         goban gboard(size);
-        return game_loop(gboard, ac > 2);
+        return game_loop(gboard, multi);
     } catch (...) {
         std::cerr << get_msg("error_memory") << std::endl;
         return 1;

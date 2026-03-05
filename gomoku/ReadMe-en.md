@@ -16,12 +16,13 @@ The objective is to be the first player to align **five stones in a row** horizo
 - Simple command-based interface
 - Makefile provided for easy compilation
 - Real-time board analysis commands
+- language selection in game (at launch or run time)
 
 ---
 
 ## ⚙️ Requirements
 
-- **C++ compiler** supporting C++17 or newer
+- **C++ compiler** supporting C++20 or newer
 - `make`
 
 ```bash
@@ -82,6 +83,22 @@ Example:
 
 ---
 
+### Language selection
+
+```bash
+./gomoku [board_size] -lang=[language]
+```
+
+Example:
+
+```bash
+./gomoku 15 -lang=en
+```
+
+→ Start a game on a 15×15 grid in english *(game language is french by default)*
+
+---
+
 ## 🎮 Commands
 
 During the game, players interact with the program using text commands:
@@ -92,7 +109,7 @@ During the game, players interact with the program using text commands:
 | `[x y]`           | coordinates of the cell (e.g., `7 8`)       | Play at coordinates `(x, y)`                            |
 | `where [x y]`     | coordinates of the cell (e.g., `where 7 8`) | highlight the cell at coordinates `(x, y)` *(not considered an action)* |
 | `end` or `Ctrl+D` | *(none)*                                    | Exit the game properly                                  |
-| `[language]`      | language (e.g., `en`)                       | change the game language *(french by default)* *(not considered an action)* |
+| `[language]`      | language (e.g., `en`)                       | change the game language *(not considered an action)* |
 | `language`        | *(none)*                                    | lists the available languages *(not considered an action)* |
 
 ---
@@ -120,23 +137,8 @@ $ ./gomoku 15
 +-------------------------------+
 tour du joueur > en
 changing language to english
-+-------------------------------+
-| . . . . . . . . . . . . . . . |
-| . . . . . . . . . . . . . . . |
-| . . . . . . . . . . . . . . . |
-| . . . . . . . . . . . . . . . |
-| . . . . . . . . . . . . . . . |
-| . . . . . . . . . . . . . . . |
-| . . . . . . . . . . . . . . . |
-| . . . . . . . . . . . . . . . |
-| . . . . . . . . . . . . . . . |
-| . . . . . . . . . . . . . . . |
-| . . . . . . . . . . . . . . . |
-| . . . . . . . . . . . . . . . |
-| . . . . . . . . . . . . . . . |
-| . . . . . . . . . . . . . . . |
-| . . . . . . . . . . . . . . . |
-+-------------------------------+
+your turn > en
+the game is already english
 your turn > begin
 AI plays 8,8
 +-------------------------------+

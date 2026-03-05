@@ -1,12 +1,14 @@
 #pragma once
 
+#define DEFAULT_LANG "fr"
+
 #include <array>
 #include <cstring>
 #include <string>
 
 namespace msg {
     static const int lang_num = 2;
-    static std::string lang = "fr";
+    static std::string lang = DEFAULT_LANG;
     static constexpr const std::array<const std::string, lang_num> langs{"fr", "en"};
 
     struct msg {
@@ -22,7 +24,7 @@ namespace msg {
         bool operator!=(const char *str) const { return std::strcmp(str, ind) != 0; };
     };
 
-    static const int msg_num = 28;
+    static const int msg_num = 29;
     static constexpr const std::array<lang_list<lang_num>, msg_num> msg_list{
         "start", {
             {{"fr", "commence"},
@@ -108,6 +110,9 @@ namespace msg {
         "error_option", {
             {{"fr", "ERREUR : option inconnue : {}"},
             {"en", "ERROR: unknown option: {}"}}},
+        "error_lang", {
+            {{"fr", "ERREUR : cette langue n'est pas disponible : {}"},
+            {"en", "ERROR: that language is not available: {}"}}},
         "error_memory", {
             {{"fr", "ERREUR DE MÉMOIRE : impossible de créer le plateau"},
             {"en", "MEMORY ERROR: couldn't create the board"}}},
@@ -153,3 +158,24 @@ std::string get_msg(const char *ind, Args&&... args) {
         return "";
     return get_fmt_msg(b->text, args...);
 };
+
+template<typename... Args>
+std::array<std::string, msg::lang_num> get_msg_all_lang(const char *ind, Args&&... args) {
+    auto begin = msg::msg_list.begin();
+    auto end = msg::msg_list.end();
+    while (begin != end && *begin != ind) {
+        ++begin;
+    }
+    std::array<std::string, msg::lang_num> list;
+    if (begin == end) 
+        return list;
+
+    auto b = begin->list.begin();
+    auto e = begin->list.end();
+    int i = 0;
+    while (b != e) {
+        list[i++] = get_fmt_msg(b->text, args...);
+        ++b;
+    }
+    return list;
+}
