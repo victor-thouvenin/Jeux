@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <cstring>
+#include <algorithm>
 #include "include/board.hpp"
 #include "include/game_end.hpp"
 #include "getnbr.hpp"
@@ -35,11 +36,13 @@ void print_lang() {
 }
 
 void change_lang(const std::string &str, bool print = true) {
-    if (str == msg::lang)
-        std::cout << get_msg("no_change_lang") << std::endl;
-    else if (print) {
+    if (str == msg::lang) {
+        if (print)
+            std::cout << get_msg("no_change_lang") << std::endl;
+    } else {
         msg::lang = str;
-        std::cout << get_msg("change_lang") << std::endl;
+        if (print)
+            std::cout << get_msg("change_lang") << std::endl;
     }
 }
 
@@ -178,57 +181,63 @@ void print_error_all_lang(const std::array<std::string, msg::lang_num> &list) {
     }
 }
 
-bool check_param(int ac, char **av, int i, bool &multi) {
-    multi = std::strcmp(av[i], "-multi") == 0;
-    bool lang = std::strncmp(av[i], "-lang=", 6) == 0;
-    if (!multi && !lang) {
-        print_error_all_lang(get_msg_all_lang("error_option", av[i]));
-        // std::cerr << get_msg("error_option", av[i]) << std::endl;
-        return false;
-    } else if (lang) {
-        if (is_lang(av[i]+6))
-            change_lang(av[i]+6, false);
-        else {
-            print_error_all_lang(get_msg_all_lang("error_lang", av[i]+6));
-            // std::cerr << get_msg("error_lang", av[i]+6) << std::endl;
+bool check_param(int ac, char **av, int &ind, bool &multi) {
+    if (std::strncmp(av[ind], "-lang=", 6) == 0) {
+        if (is_lang(av[ind]+6)) {
+            change_lang(av[ind]+6, false);
+        } else {
+            print_error_all_lang(get_msg_all_lang("error_lang", av[ind]+6));
             return false;
         }
+    } else if (std::strcmp(av[ind], "-multi") == 0) {
+        multi = true;
+    } else if (*av[ind] == '-') {
+        std::cerr << get_msg("error_option", av[ind]) << std::endl;
+        return false;
+    } else {
+        return true;
     }
-    return (i+1 == ac || check_param(ac, av, i+1, multi));
+    if (++ind == ac){
+        std::cerr << get_msg("error_missing_parameter") << std::endl;
+        return false;
+    }
+    return check_param(ac, av, ind, multi);
 }
 
 int main(int ac, char **av)
 {
-    int16 size;
     if (ac < 2){
         print_error_all_lang(get_msg_all_lang("error_missing_parameter"));
-        // std::cerr << get_msg_all_lang("error_missing_parameter") << std::endl;
         return 1;
     }
+    std::sort(av+1, av+ac, [](char *str1, char *str2){
+        if (std::strncmp(str1, "-lang=", 6) == 0 && std::strncmp(str2, "-lang=", 6) != 0)
+            return true;
+        return (std::strcmp(str1, str2) < 0);
+    });
+
+    bool multi = false;
+    int ind = 1;
+    if (!check_param(ac, av, ind, multi))
+        return 1;
+
+    int16 size;
     try {
-        size = getnbr<__int8_t>(av[1]);
+        size = getnbr<__int8_t>(av[ind]);
     } catch (std::out_of_range &e) {
-        print_error_all_lang(get_msg_all_lang("error_big_grid"));
-        // std::cerr << get_msg_all_lang("error_big_grid") << std::endl;
+        std::cerr << get_msg("error_big_grid") << std::endl;
         return 1;
     } catch (std::invalid_argument &e) {
-        print_error_all_lang(get_msg_all_lang("error_not_number_size"));
-        // std::cerr << get_msg_all_lang("error_not_number_size") << std::endl;
+        std::cerr << get_msg("error_not_number_size") << std::endl;
         return 1;
     } if (size < 0) {
-        print_error_all_lang(get_msg_all_lang("error_not_number_size"));
-        // std::cerr << get_msg_all_lang("error_not_number_size") << std::endl;
+        std::cerr << get_msg("error_not_number_size") << std::endl;
         return 1;
     } if (size < 5) {
-        print_error_all_lang(get_msg_all_lang("error_small_grid"));
-        // std::cerr << get_msg_all_lang("error_small_grid") << std::endl;
+        std::cerr << get_msg("error_small_grid") << std::endl;
         return 1;
     }
 
-    bool multi = false;
-    if (ac > 2 && !check_param(ac, av, 2, multi)) {
-        return 1;
-    }
     try {
         goban gboard(size);
         return game_loop(gboard, multi);
