@@ -5,10 +5,10 @@
 ** check
 */
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "my_printf/print.h"
-#include "matchstick.h"
+#include "nim.h"
 
 int is_map_empty(tab_t *tab)
 {
@@ -25,13 +25,13 @@ int is_map_empty(tab_t *tab)
 int remove_matches(tab_t *tab, int line, int match)
 {
     if (tab->mapnb[line] < match) {
-        puterror("Error: not enough matches on this line\n");
+        fputs("Error: not enough matches on this line\n", stderr);
         return 0;
     }
 
     int i = tab->line -line -2 +tab->mapnb[line];
     tab->mapnb[line] -= match;
-    for (; match > 0; match--) {
+    while (--match >= 0) {
         tab->map[line][i] = ' ';
         --i;
     }
@@ -42,11 +42,11 @@ int line_error(tab_t *tab, int line, int nb)
 {
     (void)tab;
     if (nb == 0 || nb > line) {
-        puterror("Error: this line is out of range\n");
+        fputs("Error: this line is out of range\n", stderr);
         return 1;
     }
     if (nb < 0) {
-        puterror("Error: invalid input (positive number expected)\n");
+        fputs("Error: invalid input (positive number expected)\n", stderr);
         return 1;
     }
     return 0;
@@ -55,15 +55,15 @@ int line_error(tab_t *tab, int line, int nb)
 int match_error(tab_t *tab, int line, int match)
 {
     if (match == 0) {
-        puterror("Error: you have to remove at least one match\n");
+        fputs("Error: you have to remove at least one match\n", stderr);
         return 1;
     }
     if (match > tab->match) {
-        my_printf("Error: you cannot remove more than %u matches per turn\n", tab->match);
+        fprintf(stderr, "Error: you cannot remove more than %u matches per turn\n", tab->match);
         return 1;
     }
     if (match < 0) {
-        puterror("Error: invalid input (positive number expected)\n");
+        fputs("Error: invalid input (positive number expected)\n", stderr);
         return 1;
     }
     return (!remove_matches(tab, line-1, match));

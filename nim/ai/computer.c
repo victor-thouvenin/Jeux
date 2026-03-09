@@ -6,7 +6,7 @@
 */
 
 #include "../my_printf/print.h"
-#include "../matchstick.h"
+#include "../nim.h"
 
 int check_balance(tab_t *tab, int *ub)
 {
@@ -85,6 +85,7 @@ int computer(tab_t *tab)
 {
     int unbalance = 0;
     int nb = check_balance(tab, &unbalance);
+
     if (unbalance == 0)
         take_rand(tab);
     else if (!find_single_line(tab))

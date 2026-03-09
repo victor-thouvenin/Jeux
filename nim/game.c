@@ -5,19 +5,17 @@
 ** game
 */
 
+#include <stdio.h>
 #include <unistd.h>
 #include <string.h>
-#include "my_printf/print.h"
-#include "matchstick.h"
+#include "nim.h"
 
 void print_map(tab_t *tab, char *border)
 {
-    putstr(border);
-    write(1, "\n", 1);
+    puts(border);
     for (int i = 0; i < tab->line; i++)
-        my_printf("%i%s%i\n", i+1, tab->map[i], i+1);
-    putstr(border);
-    write(1, "\n", 1);
+        printf("%i%s%i\n", i+1, tab->map[i], i+1);
+    puts(border);
 }
 
 int play(tab_t *tab, char *name)
@@ -25,15 +23,15 @@ int play(tab_t *tab, char *name)
     int line;
     int match;
 
-    putstr("Line: ");
+    fputs("Line: ", stdout);
     line = check_input(tab, 0, tab->line);
     if (line < 0)
         return (line == -1 ? -1 : 3);
-    putstr("Matches: ");
+    fputs("Matches: ", stdout);
     match = check_input(tab, 1, line);
     if (match < 0)
         return (match == -1 ? -1 : 3);
-    my_printf("%s removed %i %s from line %i\n", name, match, match == 1 ? "match" : "matches", line);
+    printf("%s removed %i %s from line %i\n", name, match, match == 1 ? "match" : "matches", line);
     return is_map_empty(tab)*2;
 }
 
@@ -47,12 +45,12 @@ int game(tab_t *tab)
     print_map(tab, border);
     while (i <= 0) {
         if (i == 0)
-            putstr("\nYour turn:\n");
+            puts("\nYour turn:");
         i = play(tab, "Player");
         if (i >= 0 && i <= 2)
             print_map(tab, border);
         if (i == 0) {
-            putstr("\nAI's turn...\n");
+            puts("\nAI's turn...");
             i = computer(tab);
             print_map(tab, border);
         }
@@ -63,10 +61,10 @@ int game(tab_t *tab)
         write(1, "\n", 1);
         return 0;
     case (2) :
-        putstr("You lost, too bad...\n");
+        puts("You lost, too bad...");
         return 0;
     case (1) :
-        putstr("I lost... snif... but I'll get you next time!!\n");
+        puts("I lost... snif... but I'll get you next time!!");
         return 0;
     }
     return 1;
@@ -83,7 +81,7 @@ int multiplayer(tab_t *tab, char **player_list, int player_nb)
     print_map(tab, border);
     while (i <= 0) {
         if (i == 0)
-            my_printf("\n%s's turn:\n", player_list[p]);
+            printf("\n%s's turn:\n", player_list[p]);
         i = play(tab, player_list[p]);
         if (i >= 0 && i <= 2)
             print_map(tab, border);
@@ -91,6 +89,6 @@ int multiplayer(tab_t *tab, char **player_list, int player_nb)
             p = (p+1) % player_nb;
     }
     get_next_line(-1);
-    my_printf("\n%s %s\n", player_list[p], i == 2 ? "lost" : "gave up");
+    printf((i == 2 ? "\n%s lost\n" : "\n%s gave up\n"), player_list[p]);
     return p;
 }

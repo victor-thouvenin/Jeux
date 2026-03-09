@@ -5,10 +5,11 @@
 ** name
 */
 
+#include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../matchstick.h"
+#include "../nim.h"
 #include "../my_printf/print.h"
 
 int check_confirm(void)
@@ -17,7 +18,7 @@ int check_confirm(void)
 
 	confirm = get_next_line(0);
 	if (confirm == NULL) {
-		puterror("an error occured, please try again\n");
+		fputs("an error occured, please try again\n", stderr);
 		return 0;
 	} if (strcmp(confirm, "y") == 0)
 		return 1;
@@ -34,9 +35,9 @@ int confirm_name(char *name, int i)
 	int c = 0;
 	while (c == 0) {
 		if (name[0] == '\n')
-			my_printf("do you want to play as player%i[y/n]:", i + 1);
+			printf("do you want to play as player%i[y/n]: ", i + 1);
 		else
-			my_printf("do you want to play as %s[y/n]:", name);
+			printf("do you want to play as %s[y/n]: ", name);
 		c = check_confirm();
 	}
 	return c;
@@ -47,7 +48,7 @@ char *set_basic_name(char *name, int i)
 	name = realloc(name, 8);
 
 	if (name == NULL) {
-		puterror("an error occured, please try again\n");
+		fputs("an error occured, please try again\n", stderr);
 		return NULL;
 	}
 	name[0] = 0;
@@ -67,7 +68,7 @@ int check_name(char **name, int i, int c)
 		return i;
 	while (c == 1 && name[j]) {
 		if (j != i && strcmp(name[j], name[i]) == 0) {
-			write(2, "this name is not available\n", 28);
+			fputs("this name is not available\n", stderr);
 			c = -1;
 		}
 		++j;
@@ -90,12 +91,11 @@ char **choose_name(int player)
 	name[0] = NULL;
 	while (i < player) {
 		if (name[i] == NULL) {
-			my_printf("player%i enter your username (live empty for player%i):", i + 1, i + 1);
+			printf("player%i enter your username (live empty for player%i): ", i + 1, i + 1);
 			name[i] = get_next_line(0);
 			name[i+1] = NULL;
 		}
 		if (name[i] == NULL) {
-        	puterror("an error occured");
 			free_tab(name, i+1);
 			get_next_line(-1);
 			return NULL;

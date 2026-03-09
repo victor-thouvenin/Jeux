@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "../my_printf/print.h"
-#include "../matchstick.h"
+#include "../nim.h"
 
 void take_rand(tab_t *tab)
 {

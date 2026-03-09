@@ -7,8 +7,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "my_printf/print.h"
-#include "matchstick.h"
+#include "nim.h"
 
 void free_tab(char **tab, int line)
 {
@@ -66,12 +65,11 @@ int set_tab(tab_t *tab, int line, int match)
 {
     tab->map = create_map(line);
 
-    if (tab->map != NULL)
-        tab->mapnb = create_int_map(line);
-    if (tab->map == NULL || tab->mapnb == NULL) {
-        puterror("an error occured\n");
+    if (tab->map == NULL)
+        return 0;
+    tab->mapnb = create_int_map(line);
+    if (tab->mapnb == NULL) {
         free_tab(tab->map, line);
-        free(tab->mapnb);
         return 0;
     }
 
@@ -83,15 +81,17 @@ int set_tab(tab_t *tab, int line, int match)
 int start (int line, int match, int player_nb)
 {
     tab_t tab;
-    if (!set_tab(&tab, line, match))
+    if (!set_tab(&tab, line, match)) {
+        fputs("an error occured\n", stderr);
         return 1;
+    }
 
     if (player_nb == 1)
         game(&tab);
     else {
         char **player_list = choose_name(player_nb);
         if (player_list == NULL) {
-            puterror("an error occured\n");
+            fputs("an error occured\n", stderr);
             return 1;
         }
         while (player_nb > 1) {
@@ -102,10 +102,10 @@ int start (int line, int match, int player_nb)
                 ++p;
             }
             if (--player_nb > 1) {
-                my_printf("\n%i players remaining\n\n", player_nb);
+                printf("\n%i players remaining\n\n", player_nb);
                 reset_tab(&tab);
             } else
-                my_printf("\n%s win\n", player_list[0]);
+                printf("\n%s win\n", player_list[0]);
         }
         free_tab(player_list, player_nb);
     }
@@ -123,19 +123,19 @@ int main(int ac, char **av)
 
     int line = getunbr(av[1]);
     if (line < 2 || line > 99) {
-        puterror("ERROR: number of line must be a number between 2 and 99\n");
+        fputs("ERROR: number of line must be a number between 2 and 99\n", stderr);
         return 1;
     }
 
     int match = ac > 2 ? getunbr(av[2]) : -1;
     if (ac > 2 && match < 2) {
-        puterror("ERROR: maximum match removal number must be a number greater than 1\n");
+        fputs("ERROR: maximum match removal number must be a number greater than 1\n", stderr);
         return 1;
     }
 
     int player_nb = ac == 4 ? getunbr(av[3]) : 1;
     if (ac == 4 && (player_nb < 1 || player_nb > 9)) {
-        puterror("ERROR: number of player must be a number between 1 and 9\n");
+        fputs("ERROR: number of player must be a number between 1 and 9\n", stderr);
         return 1;
     }
     return start(line, match, player_nb);

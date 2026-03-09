@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "../my_printf/print.h"
-#include "../matchstick.h"
+#include "../nim.h"
 
 char *strcut(char *s1, int *i)
 {
