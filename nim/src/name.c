@@ -10,7 +10,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../nim.h"
-#include "../my_printf/print.h"
 
 int check_confirm(void)
 {

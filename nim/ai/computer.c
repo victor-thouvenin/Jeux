@@ -5,7 +5,7 @@
 ** computer
 */
 
-#include "../my_printf/print.h"
+#include <stdio.h>
 #include "../nim.h"
 
 int check_balance(tab_t *tab, int *ub)
@@ -46,7 +46,7 @@ void choose_line(tab_t *tab, int unbalance, int n)
     int match = ABS(nb-nb2);
 
     remove_matches(tab, line, match);
-    my_printf("AI removed %d %s from line %d\n", match, match == 1 ? "match" : "matches", line+1);
+    printf("AI removed %d %s from line %d\n", match, match == 1 ? "match" : "matches", line+1);
 }
 
 int find_single_line(tab_t *tab)
@@ -77,7 +77,7 @@ int find_single_line(tab_t *tab)
             match = tab->match/2;
     }
     remove_matches(tab, line, match);
-    my_printf("AI removed %d %s from line %d\n", match, match == 1 ? "match" : "matches", line+1);
+    printf("AI removed %d %s from line %d\n", match, match == 1 ? "match" : "matches", line+1);
     return 1;
 }
 

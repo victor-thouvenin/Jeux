@@ -24,14 +24,12 @@ NAME	=	nim
 all:	$(NAME)
 
 $(NAME):	$(OBJ)
-	@make -C my_printf
-	@gcc $(CFLAGS) -o $(NAME) $(OBJ) -L ./my_printf/ -lmy_printf
+	@gcc $(CFLAGS) -o $(NAME) $(OBJ)
 
 clean:
 	@rm -f $(OBJ)
 
 fclean:	clean
-	@make fclean -C my_printf
 	@rm -f $(NAME)
 
 re:	fclean all

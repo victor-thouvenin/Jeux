@@ -5,9 +5,9 @@
 ** take a rand
 */
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "../my_printf/print.h"
 #include "../nim.h"
 
 void take_rand(tab_t *tab)
@@ -18,5 +18,5 @@ void take_rand(tab_t *tab)
         line = rand()%tab->line;
     int match = rand()%tab->mapnb[line] %tab->match +1;
     remove_matches(tab, line, match);
-    my_printf("AI removed %d %s from line %d\n", match, match == 1 ? "match" : "matches", line+1);
+    printf("AI removed %d %s from line %d\n", match, match == 1 ? "match" : "matches", line+1);
 }
