@@ -1,10 +1,3 @@
-/*
-** EPITECH PROJECT, 2022
-** board
-** File description:
-** header
-*/
-
 #pragma once
 #define MAX(x,y) (x > y ? x : y)
 #define INDMAX(t, x, y) (t[x] > t[y] ? x : y)

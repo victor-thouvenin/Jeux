@@ -1,10 +1,3 @@
-/*
-** EPITECH PROJECT, 2022
-** grid_value
-** File description:
-** grid_value
-*/
-
 #include <iostream>
 #include "include/board.hpp"
 #include "include/game_end.hpp"

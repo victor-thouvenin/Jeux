@@ -1,10 +1,3 @@
-/*
-** EPITECH PROJECT, 2022
-** board
-** File description:
-** board
-*/
-
 #include <iostream>
 #include "include/board.hpp"
 #include "include/game_end.hpp"

@@ -1,10 +1,3 @@
-/*
-** EPITECH PROJECT, 2018
-** getnbr.hpp
-** File description:
-** getnbr
-*/
-
 #pragma once
 
 #include <exception>

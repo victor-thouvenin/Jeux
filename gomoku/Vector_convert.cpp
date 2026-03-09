@@ -1,10 +1,3 @@
-/*
-** EPITECH PROJECT, 2022
-** gomoku
-** File description:
-** convert
-*/
-
 #include <vector>
 #include "include/board.hpp"
 

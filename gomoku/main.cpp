@@ -1,10 +1,3 @@
-/*
-** EPITECH PROJECT, 2022
-** gomoku
-** File description:
-** main
-*/
-
 #include <iostream>
 #include <cstring>
 #include <algorithm>
