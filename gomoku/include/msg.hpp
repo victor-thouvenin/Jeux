@@ -1,15 +1,16 @@
 #pragma once
 
+#define LANG_NUM 2
 #define DEFAULT_LANG "fr"
+#define MSG_NUM 28
 
 #include <array>
 #include <cstring>
 #include <string>
 
 namespace msg {
-    static const int lang_num = 2;
     static std::string lang = DEFAULT_LANG;
-    static constexpr const std::array<const std::string, lang_num> langs{"fr", "en"};
+    static constexpr const std::array<const std::string, LANG_NUM> langs{"fr", "en"};
 
     struct msg {
         const std::string lang;
@@ -17,15 +18,13 @@ namespace msg {
         bool operator!=(const std::string &str) const { return lang != str; };
     };
 
-    template<int lang_num>
     struct lang_list {
         const char *ind;
-        const std::array<msg, lang_num> list;
+        const std::array<msg, LANG_NUM> list;
         bool operator!=(const char *str) const { return std::strcmp(str, ind) != 0; };
     };
 
-    static const int msg_num = 29;
-    static constexpr const std::array<lang_list<lang_num>, msg_num> msg_list{
+    static constexpr const lang_list msg_list[] = {
         "start", {
             {{"fr", "commence"},
             {"en", "begin"}}},
@@ -35,9 +34,6 @@ namespace msg {
         "where", {
             {{"fr", "où"},
             {"en", "where"}}},
-        "lang", {
-            {{"fr", "langue"},
-            {"en", "language"}}},
 
         "no_change_lang", {
             {{"fr", "le jeu est déjà en français"},
@@ -141,16 +137,16 @@ std::string get_fmt_msg(std::string &&str, T arg, Args&&... args) {
 
 template<typename... Args>
 std::string get_msg(const char *ind, Args&&... args) {
-    auto begin = msg::msg_list.begin();
-    auto end = msg::msg_list.end();
+    auto begin = std::begin(msg::msg_list);
+    auto end = std::end(msg::msg_list);
     while (begin != end && *begin != ind) {
         ++begin;
     }
     if (begin == end) 
         return "";
 
-    auto b = begin->list.begin();
-    auto e = begin->list.end();
+    auto b = std::begin(begin->list);
+    auto e = std::end(begin->list);
     while (*b != msg::lang && b != e) {
         ++b;
     }
@@ -158,24 +154,3 @@ std::string get_msg(const char *ind, Args&&... args) {
         return "";
     return get_fmt_msg(b->text, args...);
 };
-
-template<typename... Args>
-std::array<std::string, msg::lang_num> get_msg_all_lang(const char *ind, Args&&... args) {
-    auto begin = msg::msg_list.begin();
-    auto end = msg::msg_list.end();
-    while (begin != end && *begin != ind) {
-        ++begin;
-    }
-    std::array<std::string, msg::lang_num> list;
-    if (begin == end) 
-        return list;
-
-    auto b = begin->list.begin();
-    auto e = begin->list.end();
-    int i = 0;
-    while (b != e) {
-        list[i++] = get_fmt_msg(b->text, args...);
-        ++b;
-    }
-    return list;
-}

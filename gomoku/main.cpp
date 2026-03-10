@@ -57,7 +57,7 @@ int read_input(const int16 size, int16 &x, int16 &y, const int16 pl)
         return 2;
     if (str == get_msg("end"))
         throw GameEnd(GameEnd::tie, "");
-    if (str == get_msg("lang")) {
+    if (str == "lang") {
         print_lang();
         return 3;
     } if (is_lang(str.c_str())) {
@@ -168,18 +168,13 @@ int game_loop(goban &gboard, const bool multi) {
     }
 }
 
-void print_error_all_lang(const std::array<std::string, msg::lang_num> &list) {
-    for (const auto &msg : list) {
-        std::cerr << msg << std::endl;
-    }
-}
-
 bool check_param(int ac, char **av, int &ind, bool &multi) {
     if (std::strncmp(av[ind], "-lang=", 6) == 0) {
         if (is_lang(av[ind]+6)) {
             change_lang(av[ind]+6, false);
         } else {
-            print_error_all_lang(get_msg_all_lang("error_lang", av[ind]+6));
+            std::cerr << get_msg("error_lang", av[ind]+6) << std::endl;
+            print_lang();
             return false;
         }
     } else if (std::strcmp(av[ind], "-multi") == 0) {
@@ -200,7 +195,7 @@ bool check_param(int ac, char **av, int &ind, bool &multi) {
 int main(int ac, char **av)
 {
     if (ac < 2){
-        print_error_all_lang(get_msg_all_lang("error_missing_parameter"));
+        std::cerr << get_msg("error_missing_parameter") << std::endl;
         return 1;
     }
     std::sort(av+1, av+ac, [](char *str1, char *str2){

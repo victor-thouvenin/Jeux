@@ -69,7 +69,7 @@ Lancez le programme avec la commande :
 ./gomoku 15 -lang=fr
 ```
 
-→ Lance une partie sur une grille **15×15** en français *(le français est la langue par défaut du jeu)*
+→ Lance une partie sur une grille **15×15** en français *(par défaut, le jeu se lance en français)*
 
 ---
 
@@ -82,7 +82,7 @@ Lancez le programme avec la commande :
 | `où [x y]`            | coordonnées de la case (ex : `où 7 8`)    | Indique l'emplacement de la case demandée sur la grille *(n'est pas compté comme une action)* |
 | `stop` ou `Ctrl+D`    | *(aucun)*                                 | Termine la partie proprement                                  |
 | `[langue]`            | langue (ex : `fr`)                        | change la langue du jeu *(n'est pas compté comme une action)* |
-| `langue`              | *(aucun)*                                 | liste les langues disponibles *(n'est pas compté comme une action)* |
+| `lang`                | *(aucun)*                                 | liste les langues disponibles *(n'est pas compté comme une action)* |
 
 Les autres actions (gestion des tours, affichage du plateau, détection de victoire) sont automatiques.
 

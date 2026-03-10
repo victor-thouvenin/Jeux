@@ -95,7 +95,7 @@ Example:
 ./gomoku 15 -lang=en
 ```
 
-→ Start a game on a 15×15 grid in english *(game language is french by default)*
+→ Start a game on a 15×15 grid in english *(default game language is french)*
 
 ---
 
@@ -109,8 +109,8 @@ During the game, players interact with the program using text commands:
 | `[x y]`           | coordinates of the cell (e.g., `7 8`)       | Play at coordinates `(x, y)`                            |
 | `where [x y]`     | coordinates of the cell (e.g., `where 7 8`) | highlight the cell at coordinates `(x, y)` *(not considered an action)* |
 | `end` or `Ctrl+D` | *(none)*                                    | Exit the game properly                                  |
-| `[language]`      | language (e.g., `en`)                       | change the game language *(not considered an action)* |
-| `language`        | *(none)*                                    | lists the available languages *(not considered an action)* |
+| `[language]`      | language (e.g., `en`)                       | change the game language *(not considered an action)*   |
+| `lang`            | *(none)*                                    | lists the available languages *(not considered an action)* |
 
 ---
 
