@@ -6,7 +6,6 @@
 */
 
 #include <stdio.h>
-#include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
 #include "../nim.h"
@@ -17,8 +16,8 @@ int check_confirm(void)
 
 	confirm = get_next_line(0);
 	if (confirm == NULL) {
-		fputs("an error occured, please try again\n", stderr);
-		return 0;
+		fputs(get_msg("error_general_try_again"), stderr);
+		return -1;
 	} if (strcmp(confirm, "y") == 0)
 		return 1;
 	if (strcmp(confirm, "n") == 0)
@@ -28,69 +27,66 @@ int check_confirm(void)
 
 int confirm_name(char *name, int i)
 {
-	if (name[0] == '\0')
-		return 0;
-
 	int c = 0;
 	while (c == 0) {
 		if (name[0] == '\n')
-			printf("do you want to play as player%i[y/n]: ", i + 1);
+			printf(get_msg("multi-player_name_blank_confirm"), i + 1);
 		else
-			printf("do you want to play as %s[y/n]: ", name);
+			printf(get_msg("multi-player_name_confirm"), name);
+		fflush(stdout);
 		c = check_confirm();
 	}
-	return c;
+	if (c == -1) {
+		return 0;
+	}
+	return 1;
 }
 
 char *set_basic_name(char *name, int i)
 {
 	name = realloc(name, 8);
-
 	if (name == NULL) {
-		fputs("an error occured, please try again\n", stderr);
+		fputs(get_msg("error_general_try_again"), stderr);
 		return NULL;
 	}
+
 	name[0] = 0;
-	strcpy(name, "player");
+	strcpy(name, get_msg("player_name"));
 	name[6] = i + '1';
 	name[7] = 0;
 	return name;
 }
 
-int check_name(char **name, int i, int c)
+int check_name(char **name, int i)
 {
-	int j = 0;
-
-	if (c == 1 && (name[i][0] == '\n'))
+	if (name[i][0] == '\n')
 		name[i] = set_basic_name(name[i], i);
 	if (name[i] == NULL)
-		return i;
-	while (c == 1 && name[j]) {
-		if (j != i && strcmp(name[j], name[i]) == 0) {
-			fputs("this name is not available\n", stderr);
-			c = -1;
+		return 0;
+
+	int j = 0;
+	while (j < i) {
+		if (strcmp(name[j], name[i]) == 0) {
+			fputs(get_msg("error_player_name_taken"), stderr);
+			return 0;
 		}
 		++j;
 	}
-	if (c == -1) {
-		free(name[i]);
-		name[i] = NULL;
-	}
-	return (c == 1 ? i + 1 : i);
+	return 1;
 }
 
 char **choose_name(int player)
 {
 	char **name = malloc(sizeof(char*)*(player+1));
 	int i = 0;
-	int c = 0;
 
 	if (name == NULL)
 		return NULL;
 	name[0] = NULL;
 	while (i < player) {
 		if (name[i] == NULL) {
-			printf("player%i enter your username (live empty for player%i): ", i + 1, i + 1);
+			printf(get_msg("multi-player_name"), i + 1, i + 1);
+			fflush(stdout);
 			name[i] = get_next_line(0);
 			name[i+1] = NULL;
 		}
@@ -99,8 +95,12 @@ char **choose_name(int player)
 			get_next_line(-1);
 			return NULL;
 		}
-		c = confirm_name(name[i], i);
-		i = check_name(name, i, c);
+		if (confirm_name(name[i], i) && check_name(name, i))
+			++i;
+		else {
+			free(name[i]);
+			name[i] = NULL;
+		}
 	}
 	name[i] = NULL;
 	return name;

@@ -46,7 +46,7 @@ void choose_line(tab_t *tab, int unbalance, int n)
     int match = ABS(nb-nb2);
 
     remove_matches(tab, line, match);
-    printf("AI removed %d %s from line %d\n", match, match == 1 ? "match" : "matches", line+1);
+    printf(get_msg("AI_played"), match, line+1);
 }
 
 int find_single_line(tab_t *tab)
@@ -67,17 +67,18 @@ int find_single_line(tab_t *tab)
     }
 
     int match;
-    if (sl == 0)
+    if (!sl) {
+        while (tab->mapnb[--line] == 0){}
         match = 1;
-    else {
+    } else {
         match = tab->mapnb[line] -(nb&1);
         if (match > tab->match)
             match = tab->mapnb[line] -((tab->match+1)*(tab->mapnb[line]/(tab->match+1)) +2 -(nb&1));
-        if (match == 0)
+        if (match <= 0)
             match = tab->match/2;
     }
     remove_matches(tab, line, match);
-    printf("AI removed %d %s from line %d\n", match, match == 1 ? "match" : "matches", line+1);
+    printf(get_msg("AI_played"), match, line+1);
     return 1;
 }
 

@@ -82,7 +82,7 @@ int start (int line, int match, int player_nb)
 {
     tab_t tab;
     if (!set_tab(&tab, line, match)) {
-        fputs("an error occured\n", stderr);
+        fputs(get_msg("error_memory"), stderr);
         return 1;
     }
 
@@ -91,7 +91,7 @@ int start (int line, int match, int player_nb)
     else {
         char **player_list = choose_name(player_nb);
         if (player_list == NULL) {
-            fputs("an error occured\n", stderr);
+            fputs(get_msg("error_general"), stderr);
             return 1;
         }
         while (player_nb > 1) {
@@ -102,10 +102,12 @@ int start (int line, int match, int player_nb)
                 ++p;
             }
             if (--player_nb > 1) {
-                printf("\n%i players remaining\n\n", player_nb);
+                printf(get_msg("multi-players_remaining"), player_nb);
                 reset_tab(&tab);
-            } else
-                printf("\n%s win\n", player_list[0]);
+            } else {
+                printf(get_msg("multi-players_win"), player_list[0]);
+                get_next_line(-1);
+            }
         }
         free_tab(player_list, player_nb);
     }
@@ -117,25 +119,25 @@ int start (int line, int match, int player_nb)
 int main(int ac, char **av)
 {
     if (ac < 2 || ac > 4) {
-        fprintf(stderr, "ERROR: between 1 and 3 arguments needed got %i\n", ac-1);
+        fprintf(stderr, get_msg("error_missing_parameter"), ac-1);
         return 1;
     }
 
     int line = getunbr(av[1]);
     if (line < 2 || line > 99) {
-        fputs("ERROR: number of line must be a number between 2 and 99\n", stderr);
+        fputs(get_msg("error_line"), stderr);
         return 1;
     }
 
     int match = ac > 2 ? getunbr(av[2]) : -1;
     if (ac > 2 && match < 2) {
-        fputs("ERROR: maximum match removal number must be a number greater than 1\n", stderr);
+        fputs(get_msg("error_match"), stderr);
         return 1;
     }
 
     int player_nb = ac == 4 ? getunbr(av[3]) : 1;
     if (ac == 4 && (player_nb < 1 || player_nb > 9)) {
-        fputs("ERROR: number of player must be a number between 1 and 9\n", stderr);
+        fputs(get_msg("error_multi"), stderr);
         return 1;
     }
     return start(line, match, player_nb);

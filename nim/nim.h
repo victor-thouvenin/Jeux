@@ -5,10 +5,32 @@
 ** header
 */
 
+#ifndef READ_SIZE
+#define READ_SIZE 10
+#endif
+
+#ifndef MSG
+#define MSG
+
+#define LANG_NUM 2
+// #define MSG_NUM 29
+
+struct msg {
+    char *lang;
+    char *msg;
+};
+
+struct msg_list {
+    char *ind;
+    struct msg list[LANG_NUM];
+};
+
+const char *get_msg(const char *str);
+#endif
+
 #ifndef MATCHSTICK
 #define MATCHSTICK
 
-#define READ_SIZE 10
 #define ABS(n) (n >= 0 ? n : -(n))
 
 typedef struct tab_stats {
@@ -35,8 +57,6 @@ char **choose_name(int player);
 void take_rand(tab_t *tab);
 void free_tab(char **map, int line);
 
-int putstr(char const *str);
-int puterror(char const *str);
 int getunbr(char const *str);
 char *get_next_line(int fd);
 

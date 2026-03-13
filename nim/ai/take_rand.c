@@ -18,5 +18,5 @@ void take_rand(tab_t *tab)
         line = rand()%tab->line;
     int match = rand()%tab->mapnb[line] %tab->match +1;
     remove_matches(tab, line, match);
-    printf("AI removed %d %s from line %d\n", match, match == 1 ? "match" : "matches", line+1);
+    printf(get_msg("AI_played"), match, line+1);
 }

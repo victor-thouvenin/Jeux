@@ -18,20 +18,22 @@ void print_map(tab_t *tab, char *border)
     puts(border);
 }
 
-int play(tab_t *tab, char *name)
+int play(tab_t *tab, const char *name)
 {
     int line;
     int match;
 
-    fputs("Line: ", stdout);
+    fputs(get_msg("ask_line"), stdout);
+    fflush(stdout);
     line = check_input(tab, 0, tab->line);
     if (line < 0)
         return (line == -1 ? -1 : 3);
-    fputs("Matches: ", stdout);
+    fputs(get_msg("ask_match"), stdout);
+    fflush(stdout);
     match = check_input(tab, 1, line);
     if (match < 0)
         return (match == -1 ? -1 : 3);
-    printf("%s removed %i %s from line %i\n", name, match, match == 1 ? "match" : "matches", line);
+    printf(get_msg("player_played"), name, match, line);
     return is_map_empty(tab)*2;
 }
 
@@ -45,12 +47,12 @@ int game(tab_t *tab)
     print_map(tab, border);
     while (i <= 0) {
         if (i == 0)
-            puts("\nYour turn:");
-        i = play(tab, "Player");
+            puts(get_msg("player_turn"));
+        i = play(tab, get_msg("player_name"));
         if (i >= 0 && i <= 2)
             print_map(tab, border);
         if (i == 0) {
-            puts("\nAI's turn...");
+            puts(get_msg("AI_turn"));
             i = computer(tab);
             print_map(tab, border);
         }
@@ -61,10 +63,10 @@ int game(tab_t *tab)
         write(1, "\n", 1);
         return 0;
     case (2) :
-        puts("You lost, too bad...");
+        puts(get_msg("player_lost"));
         return 0;
     case (1) :
-        puts("I lost... snif... but I'll get you next time!!");
+        puts(get_msg("AI_lost"));
         return 0;
     }
     return 1;
@@ -81,14 +83,13 @@ int multiplayer(tab_t *tab, char **player_list, int player_nb)
     print_map(tab, border);
     while (i <= 0) {
         if (i == 0)
-            printf("\n%s's turn:\n", player_list[p]);
+            printf(get_msg("multi-player_turn"), player_list[p]);
         i = play(tab, player_list[p]);
         if (i >= 0 && i <= 2)
             print_map(tab, border);
         if (i == 0)
             p = (p+1) % player_nb;
     }
-    get_next_line(-1);
-    printf((i == 2 ? "\n%s lost\n" : "\n%s gave up\n"), player_list[p]);
+    printf(get_msg(i == 2 ? "multi-player_lost" : "multi-player_gave_up"), player_list[p]);
     return p;
 }

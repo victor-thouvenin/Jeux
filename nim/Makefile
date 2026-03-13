@@ -10,9 +10,9 @@ SRC	=	game.c	\
 		check.c	\
 		ai/take_rand.c	\
 		ai/computer.c	\
+		src/msg.c	\
 		src/name.c	\
 		src/getunbr.c	\
-		src/putstr.c	\
 		src/get_next_line.c	\
 
 OBJ	=	$(SRC:.c=.o)

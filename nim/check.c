@@ -25,7 +25,7 @@ int is_map_empty(tab_t *tab)
 int remove_matches(tab_t *tab, int line, int match)
 {
     if (tab->mapnb[line] < match) {
-        fputs("Error: not enough matches on this line\n", stderr);
+        fputs(get_msg("error_not_enough_matches"), stderr);
         return 0;
     }
 
@@ -42,11 +42,11 @@ int line_error(tab_t *tab, int line, int nb)
 {
     (void)tab;
     if (nb == 0 || nb > line) {
-        fputs("Error: this line is out of range\n", stderr);
+        fputs(get_msg("error_line_out_of_range"), stderr);
         return 1;
     }
     if (nb < 0) {
-        fputs("Error: invalid input (positive number expected)\n", stderr);
+        fputs(get_msg("error_input"), stderr);
         return 1;
     }
     return 0;
@@ -55,15 +55,15 @@ int line_error(tab_t *tab, int line, int nb)
 int match_error(tab_t *tab, int line, int match)
 {
     if (match == 0) {
-        fputs("Error: you have to remove at least one match\n", stderr);
+        fputs(get_msg("error_no_remove"), stderr);
         return 1;
     }
     if (match > tab->match) {
-        fprintf(stderr, "Error: you cannot remove more than %u matches per turn\n", tab->match);
+        fprintf(stderr, get_msg("error_too_much_remove"), tab->match);
         return 1;
     }
     if (match < 0) {
-        fputs("Error: invalid input (positive number expected)\n", stderr);
+        fputs(get_msg("error_input"), stderr);
         return 1;
     }
     return (!remove_matches(tab, line-1, match));
@@ -72,11 +72,11 @@ int match_error(tab_t *tab, int line, int match)
 int check_input(tab_t * tab, int v, int line)
 {
     char *str = get_next_line(0);
+    if (str == NULL || strcmp(str, get_msg("command_stop")) == 0)
+        return -2;
+
     int var;
     int (*error[2])(tab_t *, int, int) = {line_error, match_error};
-
-    if (str == NULL || strcmp(str, "end") == 0)
-        return -2;
     var = getunbr(str);
     free(str);
     if (error[v](tab, line, var))
