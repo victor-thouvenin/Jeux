@@ -16,7 +16,7 @@ void take_rand(tab_t *tab)
     int line = rand()%tab->line;
     while (tab->mapnb[line] < 1)
         line = rand()%tab->line;
-    int match = rand()%tab->mapnb[line] %tab->match +1;
+    int match = rand()%MIN(tab->mapnb[line], tab->match) +1;
     remove_matches(tab, line, match);
     printf(get_msg("AI_played"), match, line+1);
 }

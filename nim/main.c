@@ -86,31 +86,33 @@ int start (int line, int match, int player_nb)
         return 1;
     }
 
-    if (player_nb == 1)
-        game(&tab);
-    else {
-        char **player_list = choose_name(player_nb);
+    char **player_list = NULL;
+    if (player_nb > 1) {
+        player_list = choose_name(player_nb);
         if (player_list == NULL) {
             fputs(get_msg("error_general"), stderr);
             return 1;
         }
-        while (player_nb > 1) {
-            int p = multiplayer(&tab, player_list, player_nb);
-            free (player_list[p]);
-            while (player_list[p]) {
-                player_list[p] = player_list[p+1];
-                ++p;
-            }
-            if (--player_nb > 1) {
-                printf(get_msg("multi-players_remaining"), player_nb);
-                reset_tab(&tab);
-            } else {
-                printf(get_msg("multi-players_win"), player_list[0]);
-                get_next_line(-1);
-            }
-        }
-        free_tab(player_list, player_nb);
     }
+
+    int p = game(&tab, player_list, player_nb);
+    while (player_nb > 1) {
+        free (player_list[p]);
+        while (player_list[p]) {
+            player_list[p] = player_list[p+1];
+            ++p;
+        }
+        if (--player_nb > 1) {
+            printf(get_msg("multi-players_remaining"), player_nb);
+            reset_tab(&tab);
+            p = game(&tab, player_list, player_nb);
+        } else {
+            printf(get_msg("multi-players_win"), player_list[0]);
+            get_next_line(-1);
+        }
+    }
+    if (player_list != NULL)
+        free_tab(player_list, player_nb);
     free_tab(tab.map, tab.line);
     free(tab.mapnb);
     return 0;
@@ -119,7 +121,7 @@ int start (int line, int match, int player_nb)
 int main(int ac, char **av)
 {
     if (ac < 2 || ac > 4) {
-        fprintf(stderr, get_msg("error_missing_parameter"), ac-1);
+        fprintf(stderr, get_msg("error_parameter"), ac-1);
         return 1;
     }
 

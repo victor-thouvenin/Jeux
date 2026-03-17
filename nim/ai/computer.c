@@ -26,20 +26,21 @@ void choose_line(tab_t *tab, int unbalance, int n)
 {
     int line = 0;
 
-    while ((tab->mapnb[line]&n) == 0)
+    while ((tab->mapnb[line]&n) == 0) {
         ++line;
+    }
 
     int nb = tab->mapnb[line]&unbalance;
     int nb2 = nb^unbalance;
     if (nb-nb2 > tab->match) {
         nb = 0;
         nb2 = 0;
-        for (int i = 1; i-nb2 <= tab->match || i-nb <= tab->match ; i <<= 1) {
-            if ((i&unbalance) != 0)
+        for (int i = 1; i <= tab->mapnb[line] ; i <<= 1) {
+            if ((i&unbalance) != 0 && i-nb2 <= tab->match)
                 nb = i;
-            else
+            else if ((i&unbalance) == 0 && i-nb <= tab->match)
                 nb2 = i;
-            if ((nb&nb2) != 0)
+            else
                 break;
         }
     }
@@ -47,6 +48,13 @@ void choose_line(tab_t *tab, int unbalance, int n)
 
     remove_matches(tab, line, match);
     printf(get_msg("AI_played"), match, line+1);
+}
+
+int ai_play(tab_t *tab, int line, int match)
+{
+    remove_matches(tab, line, match);
+    printf(get_msg("AI_played"), match, line+1);
+    return 1;
 }
 
 int find_single_line(tab_t *tab)
@@ -66,20 +74,30 @@ int find_single_line(tab_t *tab)
             line++;
     }
 
-    int match;
     if (!sl) {
         while (tab->mapnb[--line] == 0){}
-        match = 1;
-    } else {
-        match = tab->mapnb[line] -(nb&1);
-        if (match > tab->match)
-            match = tab->mapnb[line] -((tab->match+1)*(tab->mapnb[line]/(tab->match+1)) +2 -(nb&1));
-        if (match <= 0)
-            match = tab->match/2;
+        return ai_play(tab, line, 1);
     }
-    remove_matches(tab, line, match);
-    printf(get_msg("AI_played"), match, line+1);
-    return 1;
+
+    int match = tab->mapnb[line] -(nb&1);
+    if (match <= tab->match) {
+        return ai_play(tab, line, match);
+    }
+
+    match = tab->mapnb[line]%(tab->match+1);
+    if (match == 0 && (nb&1) == 1)
+        return ai_play(tab, line, tab->match);
+    if (match == 1 && (nb&1) == 0)
+        return ai_play(tab, line, 1);
+    if (nb > 1 && (match == 0 || match == 1)) {
+        line = 0;
+        while (tab->mapnb[line++] != 1){}
+        return ai_play(tab, line, 1);
+    }
+    if (match == 1) {
+        return ai_play(tab, line, 1);
+    }
+    return ai_play(tab, line, match-(nb&1));
 }
 
 int computer(tab_t *tab)

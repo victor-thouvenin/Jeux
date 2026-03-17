@@ -14,7 +14,7 @@ void print_map(tab_t *tab, char *border)
 {
     puts(border);
     for (int i = 0; i < tab->line; i++)
-        printf("%i%s%i\n", i+1, tab->map[i], i+1);
+        printf("%2i%s%i\n", i+1, tab->map[i], tab->mapnb[i]);
     puts(border);
 }
 
@@ -37,13 +37,9 @@ int play(tab_t *tab, const char *name)
     return is_map_empty(tab)*2;
 }
 
-int game(tab_t *tab)
+int singleplayer(tab_t *tab, char *border)
 {
     int i = 0;
-    char border[tab->line*2 +2];
-    memset(border, '*', tab->line*2 +1);
-    border[tab->line*2 +1] = '\0';
-
     print_map(tab, border);
     while (i <= 0) {
         if (i == 0)
@@ -72,13 +68,10 @@ int game(tab_t *tab)
     return 1;
 }
 
-int multiplayer(tab_t *tab, char **player_list, int player_nb)
+int multiplayer(tab_t *tab, char **player_list, int player_nb, char *border)
 {
     int i = 0;
     int p = 0;
-    char border[tab->line*2 +2];
-    memset(border, '*', tab->line*2 +1);
-    border[tab->line*2 +1] = '\0';
 
     print_map(tab, border);
     while (i <= 0) {
@@ -92,4 +85,16 @@ int multiplayer(tab_t *tab, char **player_list, int player_nb)
     }
     printf(get_msg(i == 2 ? "multi-player_lost" : "multi-player_gave_up"), player_list[p]);
     return p;
+}
+
+int game(tab_t *tab, char **player_list, int player_nb)
+{
+    char border[tab->line*2 +3];
+    border[0] = ' ';
+    memset(border+1, '*', tab->line*2 +1);
+    border[tab->line*2 +2] = '\0';
+
+    if (player_nb <= 1)
+        return singleplayer(tab, border);
+    return multiplayer(tab, player_list, player_nb, border);
 }

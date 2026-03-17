@@ -94,7 +94,7 @@ const struct msg_list msg_list[] = {
         {"fr", ""}}
     },
 
-    {"error_missing_parameter", {
+    {"error_parameter", {
         {"en", "ERROR: between 1 and 3 arguments needed got %i\n"},
         {"fr", ""}}
     }, {"error_line", {

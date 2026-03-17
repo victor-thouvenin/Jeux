@@ -31,7 +31,8 @@ const char *get_msg(const char *str);
 #ifndef MATCHSTICK
 #define MATCHSTICK
 
-#define ABS(n) (n >= 0 ? n : -(n))
+#define MIN(x, y) ((x) < (y) ? (x) : (y))
+#define ABS(n) ((n) >= 0 ? (n) : -(n))
 
 typedef struct tab_stats {
     char **map;
@@ -46,8 +47,7 @@ typedef struct ai_tab_stats {
     int match;
 } ai_tab_t;
 
-int game(tab_t *tab);
-int multiplayer(tab_t *tab, char **player_list, int player_nb);
+int game(tab_t *tab, char **player_list, int player_nb);
 int computer(tab_t *tab);
 
 int is_map_empty(tab_t *tab);
