@@ -10,15 +10,15 @@
 #include <string.h>
 #include "nim.h"
 
-void print_map(tab_t *tab, char *border)
+void print_map(tab_t *tab)
 {
-    puts(border);
+    puts(tab->border);
     for (int i = 0; i < tab->line; i++)
         printf("%2i%s%i\n", i+1, tab->map[i], tab->mapnb[i]);
-    puts(border);
+    puts(tab->border);
 }
 
-int play(tab_t *tab, const char *name)
+int play(tab_t *tab, const char *name, int multi)
 {
     int line;
     int match;
@@ -26,31 +26,32 @@ int play(tab_t *tab, const char *name)
     fputs(get_msg("ask_line"), stdout);
     fflush(stdout);
     line = check_input(tab, 0, tab->line);
-    if (line < 0)
-        return (line == -1 ? -1 : 3);
+    if (line <= 0)
+        return (line == -2 ? 3 : -1);
     fputs(get_msg("ask_match"), stdout);
     fflush(stdout);
     match = check_input(tab, 1, line);
-    if (match < 0)
-        return (match == -1 ? -1 : 3);
-    printf(get_msg("player_played"), name, match, line);
+    if (match <= 0)
+        return (match == -2 ? 3 : -1);
+    print_map(tab);
+    if (multi)
+        printf(get_msg("multi-player_played"), name, match, line);
+    else
+        printf(get_msg("player_played"), match, line);
     return is_map_empty(tab)*2;
 }
 
-int singleplayer(tab_t *tab, char *border)
+int singleplayer(tab_t *tab)
 {
     int i = 0;
-    print_map(tab, border);
+    print_map(tab);
     while (i <= 0) {
         if (i == 0)
             puts(get_msg("player_turn"));
-        i = play(tab, get_msg("player_name"));
-        if (i >= 0 && i <= 2)
-            print_map(tab, border);
+        i = play(tab, "", 0);
         if (i == 0) {
             puts(get_msg("AI_turn"));
             i = computer(tab);
-            print_map(tab, border);
         }
     }
     get_next_line(-1);
@@ -68,18 +69,16 @@ int singleplayer(tab_t *tab, char *border)
     return 1;
 }
 
-int multiplayer(tab_t *tab, char **player_list, int player_nb, char *border)
+int multiplayer(tab_t *tab, char **player_list, int player_nb)
 {
     int i = 0;
     int p = 0;
 
-    print_map(tab, border);
+    print_map(tab);
     while (i <= 0) {
         if (i == 0)
             printf(get_msg("multi-player_turn"), player_list[p]);
-        i = play(tab, player_list[p]);
-        if (i >= 0 && i <= 2)
-            print_map(tab, border);
+        i = play(tab, player_list[p], 1);
         if (i == 0)
             p = (p+1) % player_nb;
     }
@@ -93,8 +92,9 @@ int game(tab_t *tab, char **player_list, int player_nb)
     border[0] = ' ';
     memset(border+1, '*', tab->line*2 +1);
     border[tab->line*2 +2] = '\0';
+    tab->border = border;
 
     if (player_nb <= 1)
-        return singleplayer(tab, border);
-    return multiplayer(tab, player_list, player_nb, border);
+        return singleplayer(tab);
+    return multiplayer(tab, player_list, player_nb);
 }

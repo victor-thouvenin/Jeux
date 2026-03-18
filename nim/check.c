@@ -75,6 +75,11 @@ int check_input(tab_t * tab, int v, int line)
     if (str == NULL || strcmp(str, get_msg("command_stop")) == 0)
         return -2;
 
+    if (is_lang(str)) {
+        change_lang(str, 1);
+        free(str);
+        return 0;
+    }
     int var;
     int (*error[2])(tab_t *, int, int) = {line_error, match_error};
     var = getunbr(str);

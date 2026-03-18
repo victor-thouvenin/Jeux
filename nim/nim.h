@@ -13,7 +13,7 @@
 #define MSG
 
 #define LANG_NUM 2
-// #define MSG_NUM 29
+#define MSG_NUM 33
 
 struct msg {
     char *lang;
@@ -26,6 +26,8 @@ struct msg_list {
 };
 
 const char *get_msg(const char *str);
+int is_lang(char *lang);
+void change_lang(char *lang, int bool);
 #endif
 
 #ifndef MATCHSTICK
@@ -36,6 +38,7 @@ const char *get_msg(const char *str);
 
 typedef struct tab_stats {
     char **map;
+    char *border;
     int *mapnb;
     int line;
     int match;
@@ -50,6 +53,7 @@ typedef struct ai_tab_stats {
 int game(tab_t *tab, char **player_list, int player_nb);
 int computer(tab_t *tab);
 
+void print_map(tab_t *tab);
 int is_map_empty(tab_t *tab);
 int check_input(tab_t * tab, int v, int line);
 int remove_matches(tab_t *tab, int line, int match);

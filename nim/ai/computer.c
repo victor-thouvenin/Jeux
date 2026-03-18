@@ -22,6 +22,14 @@ int check_balance(tab_t *tab, int *ub)
     return n;
 }
 
+int ai_play(tab_t *tab, int line, int match)
+{
+    remove_matches(tab, line, match);
+    print_map(tab);
+    printf(get_msg("AI_played"), match, line+1);
+    return 1;
+}
+
 void choose_line(tab_t *tab, int unbalance, int n)
 {
     int line = 0;
@@ -46,15 +54,7 @@ void choose_line(tab_t *tab, int unbalance, int n)
     }
     int match = ABS(nb-nb2);
 
-    remove_matches(tab, line, match);
-    printf(get_msg("AI_played"), match, line+1);
-}
-
-int ai_play(tab_t *tab, int line, int match)
-{
-    remove_matches(tab, line, match);
-    printf(get_msg("AI_played"), match, line+1);
-    return 1;
+    ai_play(tab, line, match);
 }
 
 int find_single_line(tab_t *tab)

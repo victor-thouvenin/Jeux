@@ -6,21 +6,23 @@
 */
 
 #include <stdio.h>
+#include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
 #include "../nim.h"
 
 int check_confirm(void)
 {
-	char *confirm;
+	char *confirm = get_next_line(0);
 
-	confirm = get_next_line(0);
 	if (confirm == NULL) {
 		fputs(get_msg("error_general_try_again"), stderr);
 		return -1;
-	} if (strcmp(confirm, "y") == 0)
+	} if (confirm[1] != '\0')
+		return 0;
+	if (*confirm == 'y' || *confirm == 'o')
 		return 1;
-	if (strcmp(confirm, "n") == 0)
+	if (*confirm == 'n')
 		return -1;
 	return 0;
 }
@@ -51,7 +53,7 @@ char *set_basic_name(char *name, int i)
 	}
 
 	name[0] = 0;
-	strcpy(name, get_msg("player_name"));
+	strcpy(name, get_msg("player_basic_name"));
 	name[6] = i + '1';
 	name[7] = 0;
 	return name;
@@ -67,7 +69,7 @@ int check_name(char **name, int i)
 	int j = 0;
 	while (j < i) {
 		if (strcmp(name[j], name[i]) == 0) {
-			fputs(get_msg("error_player_name_taken"), stderr);
+			fputs(get_msg("error_name_taken"), stderr);
 			return 0;
 		}
 		++j;
