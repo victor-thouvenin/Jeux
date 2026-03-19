@@ -60,7 +60,7 @@ int read_input(const int16 size, int16 &x, int16 &y, const int16 pl)
     if (str == "lang") {
         print_lang();
         return 3;
-    } if (is_lang(str.c_str())) {
+    } if (is_lang(str)) {
         change_lang(str);
         return 3;
     }
