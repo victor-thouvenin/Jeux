@@ -1,4 +1,4 @@
-# 🚢 Navy (Battleship)
+# 🚢 Battleship
 
 **Battleship** is a terminal-based implementation of the classic game, written in **C**.  
 Two players run the program in **separate terminals** and play against each other using **UNIX process communication**.

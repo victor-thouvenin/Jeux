@@ -9,7 +9,7 @@ Chaque déplacement doit être réfléchi, car il est impossible de tirer les bo
 ## ⚠️ Avertissement épilepsie
 
 Ce jeu utilise un affichage en console rafraîchi après chaque action.
-Lorsqu’on déplace rapidement le joueur ou les boîtes, l’écran peut **clignoter à haute fréquence** selon la configuration du terminal ou du système.
+Lorsque le joueur ou les boîtes se déplacent rapidement, l’écran peut **clignoter à haute fréquence** selon la configuration du terminal ou du système.
 👉 **Il est déconseillé de jouer (ou conseillé de jouer lentement) si vous êtes sensible aux lumières ou aux effets visuels rapides (photosensibilité / épilepsie).**
 Pour réduire les effets :
 - Évitez de maintenir les touches de déplacement appuyées ou d'appuyer trop rapidement dessus
@@ -29,7 +29,7 @@ Pour réduire les effets :
 - Vérification automatique de la victoire
 - Commandes clavier pour déplacer le joueur
 - Gestion simple des erreurs de fichier (format invalide / fichier introuvable)
-- Vous pouvez quitter à tout moment avec `Q` ou la touche `Fin` ou recommencer avec ` ` (Espace).
+- Vous pouvez quitter à tout moment avec `Q` ou la touche `Fin` ou recommencer avec la barre espace.
 
 ---
 
@@ -40,7 +40,7 @@ Pour réduire les effets :
 
 Sur Debian/Ubuntu :
 ```bash
-sudo apt-get install libncurses6 libncurses-dev libncursesw6
+sudo apt install libncurses6 libncurses-dev libncursesw6
 ```
 
 ### Compilation
@@ -64,13 +64,13 @@ Cela génère l’exécutable :
 Lancez le jeu avec un **fichier de carte** en paramètre :
 
 ```bash
-./sokoban <map.txt>
+./sokoban <carte.txt>
 ```
 
 ### Exemple :
 
 ```bash
-./sokoban levels/level1.txt
+./sokoban cartes/niveau1.txt
 ```
 
 ---
@@ -111,7 +111,7 @@ La carte est un fichier texte où chaque caractère représente une case. Les li
 
 ## 🧠 Règles du jeu
 
-1. Vous incarnez le joueur `P` et devez pousser les boîtes `X` vers les emplacements `O`.
+1. Vous incarnez le joueur `P` et devez pousser les boîtes `X` vers leurs emplacements `O`.
 2. Vous **ne pouvez pas tirer** les boîtes, seulement les pousser, une boîte ne peut être poussée que si la case de destination est libre (case vide ou emplacement de stockage).
 3. lorsque les boîtes occupent **tout les emplacement de stockage**, la partie est **gagnée**.
 4. Si vous êtes bloqué, la partie est **perdu**.
@@ -158,5 +158,3 @@ La carte est un fichier texte où chaque caractère représente une case. Les li
 * Sauvegarde / chargement de la progression
 * Animation du joueur et des boîtes
 * annuler le dernier coup / historique des mouvements
-
----

@@ -1,4 +1,4 @@
-# 🧩 Sliding Puzzle (Taquin)
+# 🧩 Sliding Puzzle
 
 **Sliding Puzzle** is a classic puzzle game implemented in **C#**.  
 The goal is to reorder the tiles into their correct positions by sliding them into the empty space.

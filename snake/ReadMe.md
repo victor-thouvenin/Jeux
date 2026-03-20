@@ -1,7 +1,7 @@
 # 🟡 Snake - Pac Edition
 
 **Snake - Pac Edition** est une réinterprétation du classique **Snake**, développée en **Python** avec **Pygame**, sur le thème de **Pac-Man**.
-Le joueur contrôle un serpent dont la tête est **Pac-Man**, le corps est composé des **fantômes** du jeu, et les **Pac-Gums** remplacent les pommes.
+Le joueur contrôle un serpent dont la tête est **Pac-Man**, le corps est composé des **fantômes**, et les **Pac-Gums** remplacent les pommes.
 
 ---
 
@@ -28,7 +28,7 @@ Assurez-vous d’avoir **Python 3** installé, puis installez **Pygame** :
 
 ```bash
 pip install pygame
-````
+```
 
 ---
 
@@ -49,7 +49,7 @@ Une fenêtre s’ouvre automatiquement avec le terrain de jeu.
 
 | Touche      | Action              |
 | ----------- | ------------------- |
-| 🡐 🡒 🡑 🡓       | Déplacer le serpent |
+| 🡐 🡒 🡑 🡓     | Déplacer le serpent |
 | **Q** ou **Échap** | Quitter la partie   |
 
 ---
@@ -58,10 +58,9 @@ Une fenêtre s’ouvre automatiquement avec le terrain de jeu.
 
 * Déplacez **Pac-Man** à travers l’écran pour **manger les Pac-Gums** ⚪.
 * À chaque Pac-Gum avalée :
-
   * Le serpent grandit 👻
   * Le score augmente 💯
-* Si Pac-Man touche un mur ou son propre corps de fantômes, la partie est terminée 💥.
+* Si Pac-Man touche un mur ou les fantômes, la partie est terminée 💥.
 * Le but est de **survivre le plus longtemps possible** en obtenant le meilleur score.
 
 ---
@@ -69,9 +68,15 @@ Une fenêtre s’ouvre automatiquement avec le terrain de jeu.
 ## 🧾 Exemple de partie (visuel simplifié)
 
 ```
-Score : 120
+Score : 3
 
-🟡👻👻👻⚪
+👻👻👻🟡⚪
+```
+
+```
+Score : 4
+
+👻👻👻👻🟡
 ```
 
 Pac-Man avance, mange la Pac-Gum, et un nouveau fantôme apparaît à l’arrière de la file.
@@ -80,10 +85,10 @@ Pac-Man avance, mange la Pac-Gum, et un nouveau fantôme apparaît à l’arriè
 
 ## 🎨 Thème graphique
 
-Les sprites utilisés sont des ressources libres inspirées de **Pac-Man** :
+Les sprites utilisés sont des ressources libres inspirées de **Pac-Man**
 
 ---
 
 ## 💡 Améliorations possibles
 
-* Ajout d’un **menu principal** et d’une **vitesse progressive**
+* menu principal et vitesse progressive

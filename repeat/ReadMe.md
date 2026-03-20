@@ -8,13 +8,12 @@ et voyez jusqu’où vous pouvez aller avant de vous tromper !
 
 ## 🧩 Fonctionnalités
 
-- Développé avec **LÖVE (Love2D)** ❤️
-- Interface graphique avec **grille interactive de 1 à 9**
+- Interface graphique avec **grille de 1 à 9**
 - Jeu en **solo**
-- **Séquences aléatoires** de chiffres
-- **Vitesse qui augmente** après un nombre aléatoire de tours
-- Possibilité de quitter à tout moment avec `Q` ou `échap`
-- Rejouable à l’infini : la séquence s’allonge tant que vous ne faites pas d’erreur
+- Séquences de chiffres aléatoires
+- Retour visuel avec cellules en surbrillance
+- Probabilités d'acceleration du rythme croissante à chaque tours
+- Aucun paramètre requis
 
 ---
 
@@ -26,7 +25,7 @@ Assurez-vous d’avoir **LÖVE** installé sur votre système.
 ### Vérifiez l’installation :
 ```bash
 love --version
-````
+```
 
 ---
 
@@ -38,22 +37,18 @@ Lancez simplement le jeu avec :
 love game/
 ```
 
-Aucun paramètre n’est nécessaire.
-
 ---
 
 ## 🎮 Règles du jeu
 
 1. Une **grille de chiffres (1 à 9)** apparaît à l’écran.
 2. Le jeu affiche une **séquence de chiffres aléatoires** : les cases correspondantes s’allument brièvement une par une.
-3. Une fois la séquence affichée, le joueur doit **reproduire la même séquence** en appuyant sur les touches **1 à 9**.
+3. Une fois la séquence affichée, le joueur doit **reproduire la même séquence** en appuyant sur les touches **1 à 9** du clavier.
 4. Si la séquence est correcte :
-
    * le score augmente 💯
    * la **séquence s'allonge**
-   * la **vitesse peut augmenter** (après un nombre de tours aléatoire)
+   * la **vitesse peut augmenter** (avec une probabilité croissante)
 5. Si le joueur se trompe :
-
    * la partie s’arrête
    * le score final est affiché
 
@@ -61,14 +56,14 @@ Aucun paramètre n’est nécessaire.
 
 ## 🕹️ Contrôles
 
-| Touche     | Action                        |
-| ---------- | ----------------------------- |
-| **1 – 9**     | Répéter les chiffres affichés |
-| **Q** ou **Échap** | Quitter le jeu                 |
+| Touche       | Action                         |
+| ------------ | ------------------------------ |
+| **1 – 9**    | Répéter les chiffres affichés  |
+| **Q** ou **Échap** | Quitter le jeu           |
 
 ---
 
-## 📊 Exemple de progression
+## 📊 Exemple de session
 
 1. Le jeu montre la case `5` qui s’allume.
 2. Vous tapez `5`.

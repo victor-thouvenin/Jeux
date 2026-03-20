@@ -1,33 +1,30 @@
-# 🔴🟡 Puissance 4 en Ruby  
-Deux joueurs — `O` (Joueur 1) et `@` (Joueur 2)  
-Mode local **ou** mode réseau (LAN)
+# 🔴🟡 Puissance 4
+
+Un jeu Puissance 4 implémenté en Ruby, jouable en local ou sur réseau local.
+
+- Joueur 1 : `O`
+- Joueur 2 : `@`
 
 ---
 
-## 🎮 Description
+## 🧩 Fonctionnalités
 
-Ce projet implémente un **Puissance 4** en Ruby, jouable :
-
-- **En local** (à deux joueurs sur la même machine)
-- **En réseau local (LAN)** grâce à deux scripts :  
+- Multijoueur en local (à deux joueurs sur la même machine)
+- En réseau local (LAN) grâce à deux scripts :  
   - `puissance4_server.rb` (serveur → Joueur 1 / `O`)  
   - `puissance4_client.rb` (client → Joueur 2 / `@`)
 
-Le but reste classique : aligner **4 jetons identiques** horizontalement, verticalement ou en diagonale.
+Le but reste classique : aligner **4 pions identiques** horizontalement, verticalement ou en diagonale.
 
 ---
 
 ## 🧠 Règles du jeu
 
 - La grille est de **7 colonnes × 6 lignes**
-- Les joueurs entrent le **numéro d'une colonne (1–7)** pour y déposer leur jeton
-- Joueur 1 : `O`  
-- Joueur 2 : `@`
-- Le premier joueur qui aligne **4 pions** :
-  - horizontalement  
-  - verticalement  
-  - diagonalement  
-  gagne la partie !
+- Les joueurs entrent le **numéro d'une colonne (1–7)** pour y déposer leur pion
+  - Joueur 1 : `O`
+  - Joueur 2 : `@`
+- Le premier joueur qui aligne **4 pions** (horizontalement, verticalement ou diagonalement) gagne la partie !
 - Si le plateau est plein : **égalité**
 - Le jeu signale :
   - les coups invalides (colonne pleine ou numéro incorrect)
@@ -36,11 +33,7 @@ Le but reste classique : aligner **4 jetons identiques** horizontalement, vertic
 
 ---
 
-## 🚀 Utilisation
-
-### ⚙️ Prérequis
-
-- Assurez-vous d’avoir **.NET 6.0 ou supérieur** installé
+## 🚀 Exécution
 
 ### 🕹️ 1. Mode local (deux joueurs, même machine)
 
@@ -51,6 +44,42 @@ ruby puissance4_server.rb
 ```
 
 Les joueurs entrent simplement le numéro de colonne à leur tour.
+
+---
+
+### 🌐 2. Mode réseau (LAN, deux machines différentes)
+
+#### 📡 1. Lancer le serveur (Joueur 1)
+
+```bash
+ruby puissance4_server.rb --online [port]
+```
+
+Exemple :
+
+```bash
+ruby puissance4_server.rb --online 5000
+```
+
+Le serveur attendra la connexion du joueur 2.
+
+---
+
+#### 🖧 2. Lancer le client (Joueur 2)
+
+```bash
+ruby puissance4_client.rb [ip_joueur1] [port]
+```
+
+Exemple :
+
+```bash
+ruby puissance4_client.rb 192.168.1.42 5000
+```
+
+Le client se connecte alors au serveur et la partie peut commencer.
+
+---
 
 ## 🧾 Exemple de partie
 
@@ -101,51 +130,11 @@ player 1's turn: 5
 
 ---
 
-## 🌐 Mode réseau (LAN)
-
-Permet à deux joueurs de jouer sur **deux machines différentes**.
-
-### 📡 1. Lancer le serveur (Joueur 1 — `O`)
-
-Syntaxe :
-
-```bash
-ruby puissance4_server.rb --online [port]
-```
-
-Exemple :
-
-```bash
-ruby puissance4_server.rb --online 5000
-```
-
-Le serveur attendra la connexion du joueur 2.
-
----
-
-### 🖧 2. Lancer le client (Joueur 2 — `@`)
-
-Syntaxe :
-
-```bash
-ruby puissance4_client.rb [ip_joueur1] [port]
-```
-
-Exemple :
-
-```bash
-ruby puissance4_client.rb 192.168.1.42 5000
-```
-
-Le client se connecte alors au serveur et la partie peut commencer.
-
----
-
 ## 🕹️ Contrôles
 
 | Entrée | Action                           |
 | ------ | -------------------------------- |
-| `1–7`  | Déposer un jeton dans la colonne |
+| `1–7`  | Déposer un pion dans la colonne  |
 
 ---
 

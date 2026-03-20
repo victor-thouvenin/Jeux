@@ -114,7 +114,7 @@ During the game, players interact with the program using text commands:
 
 ---
 
-## 🧾 Example Session
+## 🧾 Example session
 
 ```
 $ ./gomoku 15

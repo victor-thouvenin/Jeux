@@ -8,42 +8,42 @@ Le joueur remplit les cases en entrant leurs coordonnées suivies du chiffre à 
 
 ## 🧩 Fonctionnalités
 
-- Grille **9x9** respectant les règles standard du Sudoku
+- Grille 9x9 respectant les règles standard du Sudoku
 - Entrée simple : `[ligne] [colonne] [nombre]`
 - Possibilité de **retirer** un nombre avec `0` ou `X`
-- Vérification automatique des **règles de validité** (ligne, colonne, carré 3×3)
+- Vérification automatique des entrés
 - Commande `Q` pour quitter à tout moment
 - Interface texte claire et réactive
-- Aucune dépendance externe ni paramètre requis au lancement
 
 ---
 
-## 🚀 Compilation & Exécution
-
-### ⚙️ Prérequis
+## ⚙️ Compilation
 
 - Assurez-vous d’avoir **.NET 8.0 ou supérieur** installé
 
-### Compilation
+```bash
+dotnet --version
+```
+
+Pour compiler, exécutez la commande : 
 
 ```bash
 dotnet build
 ```
 
-### Exécution
+---
+
+## 🚀 Exécution
 
 ```bash
 dotnet run
 ```
 
-Le jeu démarre immédiatement et affiche la grille initiale.
-
 ---
 
 ## 🧠 Règles du jeu
 
-Le but est de **remplir la grille 9×9** avec des chiffres de **1 à 9** :
-
+* Le but est de **remplir la grille 9×9** avec des chiffres de **1 à 9** :
 * Chaque ligne, colonne ou bloc **3×3** doit contenir **tous les chiffres de 1 à 9** sans doublon.
 
 ---
@@ -52,11 +52,9 @@ Le but est de **remplir la grille 9×9** avec des chiffres de **1 à 9** :
 
 | Entrée                       | Action                                       |
 | ---------------------------- | -------------------------------------------- |
-| `[ligne] [colonne] [nombre]` | Place le nombre à la position donnée (1 à 9) |
+| `[ligne] [colonne] [nombre]` | Place le nombre à la position donnée (1 à 9) (ex : `1 1 5` = place un 5 en haut à gauche) |
 | `[ligne] [colonne] [0 ou X]` | Supprime le nombre de la case                |
 | `Q`                          | Affiche la solution et quitte la partie      |
-
-> ⚠️ Les coordonnées commencent à **1** (ex : `1 1 5` = place un 5 en haut à gauche)
 
 ---
 
@@ -118,15 +116,14 @@ Le but est de **remplir la grille 9×9** avec des chiffres de **1 à 9** :
 | _ _ _ | _ _ 5 | _ _ 9 |
 | _ 4 _ | _ 8 _ | _ _ _ |
  ------- ------- -------
+[...]
 ```
 
 ---
 
 ## 🧩 Validation automatique
 
-Chaque mouvement est vérifié :
-
-* Si un nombre prédéfini est déjà dans la case, une erreur est affichée.
+* Si un nombre prédéfini est déjà dans la case choisie, une erreur est affichée.
 * Sinon, la grille est mise à jour.
 * Le jeu détecte automatiquement la **victoire** quand la grille est complète et correcte.
 
