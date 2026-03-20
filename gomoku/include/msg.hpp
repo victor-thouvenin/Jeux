@@ -27,91 +27,95 @@ namespace msg {
     static constexpr const lang_list msg_list[] = {
         "start", {
             {{"fr", "commence"},
-            {"en", "begin"}}},
-        "end", {
+            {"en", "begin"}}
+        },"end", {
             {{"fr", "stop"},
-            {"en", "end"}}},
-        "where", {
+            {"en", "end"}}
+        },"where", {
             {{"fr", "où"},
-            {"en", "where"}}},
+            {"en", "where"}}
+        },
 
         "no_change_lang", {
             {{"fr", "le jeu est déjà en français"},
-            {"en", "the game is already english"}}},
-        "change_lang", {
+            {"en", "the game is already english"}}
+        },"change_lang", {
             {{"fr", "langue changée en français"},
-            {"en", "changing language to english"}}},
-        "player_turn", {
+            {"en", "changing language to english"}}
+        },"player_turn", {
             {{"fr", "tour du joueur > "},
-            {"en", "your turn > "}}},
-        "multi_player_turn", {
+            {"en", "your turn > "}}
+        },"multi_player_turn", {
             {{"fr", "tour du joueur {} > "},
-            {"en", "player {}'s turn > "}}},
-        "player1_win", {
+            {"en", "player {}'s turn > "}}
+        },"player1_win", {
             {{"fr", "le joueur 1 a gagné. bravo!"},
-            {"en", "player 1 won. good job!"}}},
-        "player2_win", {
+            {"en", "player 1 won. good job!"}}
+        },"player2_win", {
             {{"fr", "le joueur 2 a gagné. bravo!"},
-            {"en", "player 2 won. good job!"}}},
-        "AI_turn", {
+            {"en", "player 2 won. good job!"}}
+        },"AI_turn", {
             {{"fr", "tour de l'IA > "},
-            {"en", "AI's turn > "}}},
-        "AI_plays", {
+            {"en", "AI's turn > "}}
+        },"AI_plays", {
             {{"fr", "l'IA a joué {}, {}"},
-            {"en", "AI plays {}, {}"}}},
-        "AI_won", {
+            {"en", "AI plays {}, {}"}}
+        },"AI_won", {
             {{"fr", "j'ai gagné. mwahaha"},
-            {"en", "i won. mwahaha"}}},
-        "AI_lost", {
+            {"en", "i won. mwahaha"}}
+        },"AI_lost", {
             {{"fr", "j'ai perdu. snif"},
-            {"en", "i lost. huuuuuh"}}},
-        "tie", {
+            {"en", "i lost. huuuuuh"}}
+        },"tie", {
             {{"fr", "match nul"},
-            {"en", "it's a tie"}}},
+            {"en", "it's a tie"}}
+        },
 
         "error_coordinate_format", {
             {{"fr", "mauvais format de coordonnées"},
-            {"en", "wrong coordinate format"}}},
-        "error_multiplayer_AI", {
+            {"en", "wrong coordinate format"}}
+        },"error_multiplayer_AI", {
             {{"fr", "il n'y a pas d'IA en mode multijoueur"},
-            {"en", "no AI in multiplayer mode"}}},
-        "error_game_began", {
+            {"en", "no AI in multiplayer mode"}}
+        },"error_game_began", {
             {{"fr", "la partie a déjà commencé"},
-            {"en", "game has already began"}}},
-        "error_coordinate_range", {
+            {"en", "game has already began"}}
+        },"error_coordinate_range", {
             {{"fr", "ERREUR: les coordonnées doivent être des nombres entre 1 et {} au format \"x y\""},
-            {"en", "ERROR: the coordinates have to be numbers between 1 and {} in format \"x y\""}}},
-        "error_not_free_spot", {
+            {"en", "ERROR: the coordinates have to be numbers between 1 and {} in format \"x y\""}}
+        },"error_not_free_spot", {
             {{"fr", "ERREUR: cette case n'est pas libre, action impossible"},
-            {"en", "ERROR: that spot isn't free, you can't play here"}}},
-        "error_here_not_free", {
+            {"en", "ERROR: that spot isn't free, you can't play here"}}
+        },"error_here_not_free", {
             {{"fr", "cette case n'est pas libre"},
-            {"en", "that spot isn't free"}}},
-        "error_general", {
+            {"en", "that spot isn't free"}}
+        },"error_general", {
             {{"fr", "une erreur s'est produite"},
-            {"en", "an error occurred"}}},
+            {"en", "an error occurred"}}
+        },
 
         "error_missing_parameter", {
             {{"fr", "ERREUR : taille de la grille manquante"},
-            {"en", "ERROR: grid size is missing"}}},
-        "error_big_grid", {
+            {"en", "ERROR: grid size is missing"}}
+        },"error_big_grid", {
             {{"fr", "ERREUR : taille non prise en charge : grille trop grande"},
-            {"en", "ERROR: unsupported size: grid is too large"}}},
-        "error_small_grid", {
+            {"en", "ERROR: unsupported size: grid is too large"}}
+        },"error_small_grid", {
             {{"fr", "ERREUR : taille non prise en charge : grille trop petite"},
-            {"en", "ERROR: unsupported size: grid is too small"}}},
-        "error_not_number_size", {
+            {"en", "ERROR: unsupported size: grid is too small"}}
+        },"error_not_number_size", {
             {{"fr", "ERREUR : taille non prise en charge : la taille doit être un nombre entier positif"},
-            {"en", "ERROR: unsupported size: size must be a positive integer"}}},
-        "error_option", {
+            {"en", "ERROR: unsupported size: size must be a positive integer"}}
+        },"error_option", {
             {{"fr", "ERREUR : option inconnue : {}"},
-            {"en", "ERROR: unknown option: {}"}}},
-        "error_lang", {
-            {{"fr", "ERREUR : cette langue n'est pas disponible : {}"},
-            {"en", "ERROR: that language is not available: {}"}}},
-        "error_memory", {
+            {"en", "ERROR: unknown option: {}"}}
+        },"error_lang", {
+            {{"fr", "ERREUR : cette langue n'est pas disponible : {}\nles langues disponibles sont :"},
+            {"en", "ERROR: that language is not available: {}\nthe available languages are:"}}
+        },"error_memory", {
             {{"fr", "ERREUR DE MÉMOIRE : impossible de créer le plateau"},
-            {"en", "MEMORY ERROR: couldn't create the board"}}},
+            {"en", "MEMORY ERROR: couldn't create the board"}}
+        },
     };
 }
 

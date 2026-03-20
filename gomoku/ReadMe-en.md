@@ -95,7 +95,7 @@ Example:
 ./gomoku 15 -lang=en
 ```
 
-→ Start a game on a 15×15 grid in english *(default game language is french)*
+→ Start a game on a 15×15 grid in english *(start in french by default)*
 
 ---
 

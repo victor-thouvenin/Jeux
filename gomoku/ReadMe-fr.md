@@ -69,7 +69,7 @@ Lancez le programme avec la commande :
 ./gomoku 15 -lang=fr
 ```
 
-→ Lance une partie sur une grille **15×15** en français *(par défaut, le jeu se lance en français)*
+→ Lance une partie sur une grille **15×15** en français *(le jeu se lance en français par défaut)*
 
 ---
 
