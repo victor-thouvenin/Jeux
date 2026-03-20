@@ -80,6 +80,10 @@ int check_input(tab_t * tab, int v, int line)
         free(str);
         return 0;
     }
+    if (strcmp(str, "lang") == 0) {
+        print_lang();
+        return 0;
+    }
     int var;
     int (*error[2])(tab_t *, int, int) = {line_error, match_error};
     var = getunbr(str);

@@ -6,6 +6,7 @@
 */
 
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #include "nim.h"
 
@@ -118,10 +119,36 @@ int start (int line, int match, int player_nb)
     return 0;
 }
 
+int check_opt(int ac, char **av, int *ind)
+{
+    int i = 0;
+    while (++i < ac) {
+        if (strncmp(av[i], "-lang=", 6) == 0) {
+            if (is_lang(av[i]+6))
+                change_lang(av[i]+6, 0);
+            else {
+                fprintf(stderr, get_msg("error_lang"), av[i]+6);
+                print_lang();
+                return 0;
+            }
+        } else if (*av[i] == '-' && av[i][1] != '\0') {
+            fprintf(stderr, get_msg("error_option"), av[i]);
+            return 0;
+        } else {
+            strcpy(av[++*ind], av[i]);
+        }
+    }
+    if (*ind < 1 || *ind > 3) {
+        fprintf(stderr, get_msg("error_parameter"), *ind);
+        return 0;
+    }
+    return 1;
+}
+
 int main(int ac, char **av)
 {
-    if (ac < 2 || ac > 4) {
-        fprintf(stderr, get_msg("error_parameter"), ac-1);
+    int pnum = 0;
+    if (!check_opt(ac, av, &pnum)) {
         return 1;
     }
 
@@ -130,15 +157,26 @@ int main(int ac, char **av)
         fputs(get_msg("error_line"), stderr);
         return 1;
     }
-
-    int match = ac > 2 ? getunbr(av[2]) : -1;
-    if (ac > 2 && match < 2) {
-        fputs(get_msg("error_match"), stderr);
-        return 1;
+    if (pnum == 1) {
+        return start(line, -1, 1);
     }
 
-    int player_nb = ac == 4 ? getunbr(av[3]) : 1;
-    if (ac == 4 && (player_nb < 1 || player_nb > 9)) {
+    int match;
+    if (*av[2] == '-' && av[2][1] == '\0')
+        match = -1;
+    else {
+        match = getunbr(av[2]);
+        if (match < 2) {
+            fputs(get_msg("error_match"), stderr);
+            return 1;
+        }
+    }
+    if (pnum == 2) {
+        return start(line, match, 1);
+    }
+
+    int player_nb = getunbr(av[3]);
+    if (player_nb < 1 || player_nb > 9) {
         fputs(get_msg("error_multi"), stderr);
         return 1;
     }

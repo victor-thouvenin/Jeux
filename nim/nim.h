@@ -27,6 +27,7 @@ struct msg_list {
 
 const char *get_msg(const char *str);
 int is_lang(char *lang);
+void print_lang();
 void change_lang(char *lang, int bool);
 #endif
 
