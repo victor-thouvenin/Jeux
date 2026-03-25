@@ -40,8 +40,21 @@ Lancez simplement le jeu avec :
 python snake.py
 ```
 
-Aucun paramètre n’est requis.
 Une fenêtre s’ouvre automatiquement avec le terrain de jeu.
+
+Vous pouvez choisir la langue avec un paramètre optionnel :
+
+```bash
+python snake.py [langue]
+```
+
+Exemple :
+
+```bash
+python snake.py fr
+```
+
+Le jeu se lance en français par défaut ou si la langue n'est pas disponible
 
 ---
 

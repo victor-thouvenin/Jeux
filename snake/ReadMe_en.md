@@ -38,8 +38,23 @@ pip install pygame
 python snake.py
 ```
 
-No parameters are required.
 A window will automatically open displaying the playing field.
+
+You can also choose the language with an optional parameter:
+
+```bash
+python snake.py [language]
+```
+
+Example:
+
+```bash
+python snake.py en
+```
+
+Start the game in english
+
+The game launches in French by default or if the language is not available
 
 ---
 
