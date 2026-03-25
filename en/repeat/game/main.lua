@@ -36,7 +36,7 @@ function love.load()
 end
 
 function love.keypressed(key)
-    if key == 'q' or key == "echap" then
+    if key == 'q' or key == "escape" then
         love.event.quit()
     elseif show_state == 0 then
         addElem()
@@ -70,11 +70,12 @@ function love.keypressed(key)
 end
 
 function love.draw()
+    love.graphics.scale(1.2)
+    love.graphics.print("press Q or escape to quit", 790, 580)
     if show_state == 0 then
         love.graphics.print("press any key to start", 790, 330)
     else
-        local speed = string.format("speed %.2f", sped)
-        love.graphics.print("score: " .. #serie-1 .. "\n" .. speed, 750, 275)
+        love.graphics.print("score: " .. #serie-1 .. "\n" .. "speed: " .. sped, 750, 275)
     end
     if loose then
         love.graphics.print("wrong!", 840, 315)
