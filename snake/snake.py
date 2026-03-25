@@ -1,5 +1,6 @@
 #!/bin/python3
 
+from sys import argv
 import math
 import random
 import time
@@ -224,6 +225,10 @@ def get_dir(angl):
     sin = round(math.sin(-rad))
     return (cos, sin)
 
+lang = "fr"
+quit_str_dict = {"fr":"Q ou Échap pour quitter", "en":"Q or escape to quit"}
+if len(argv) > 1 and argv[1] in quit_str_dict:
+    lang = argv[1]
 pygame.mixer.init()
 pygame.init()
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
@@ -242,7 +247,7 @@ def game():
     snake_body_hitbox = pygame.sprite.Group()
     gum = Gum(snake.pos)
     font = pygame.font.SysFont(None, 64)
-    text_quit = font.render("Q or escape to quit", True, (100, 100, 100))
+    text_quit = font.render(quit_str_dict[lang], True, (100, 100, 100))
     text_rect = text_quit.get_rect()
     score_text = font.render("score: %d" % score, True, (100, 100, 100))
     eat_sound = pygame.mixer.Sound("sound/eat_sound.ogg")

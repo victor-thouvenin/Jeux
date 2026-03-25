@@ -83,7 +83,7 @@ Pac-Man moves forward, eats the Pac-Gum, and a new ghost appears at the back of 
 
 ## 🎨 Graphic Theme
 
-The sprites used are homemade resources inspired by **Pac-Man**
+The sprites used are free resources inspired by **Pac-Man**
 
 ---
 
