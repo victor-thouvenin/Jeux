@@ -54,7 +54,7 @@ python snake.py en
 
 Start the game in english
 
-The game launches in French by default or if the language is not available
+The game launches in French by default
 
 ---
 

@@ -54,7 +54,7 @@ Exemple :
 python snake.py fr
 ```
 
-Le jeu se lance en français par défaut ou si la langue n'est pas disponible
+Le jeu se lance en français par défaut
 
 ---
 

@@ -1,6 +1,6 @@
 #!/bin/python3
 
-from sys import argv
+import sys
 import math
 import random
 import time
@@ -227,8 +227,11 @@ def get_dir(angl):
 
 lang = "fr"
 quit_str_dict = {"fr":"Q ou Échap pour quitter", "en":"Q or escape to quit"}
-if len(argv) > 1 and argv[1] in quit_str_dict:
-    lang = argv[1]
+if len(sys.argv) > 1:
+    if sys.argv[1] not in quit_str_dict:
+        print("cette langue n'est pas disponible\nthat language is not available", file=sys.stderr)
+        sys.exit(1)
+    lang = sys.argv[1]
 pygame.mixer.init()
 pygame.init()
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
