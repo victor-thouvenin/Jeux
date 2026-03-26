@@ -229,7 +229,7 @@ lang = "fr"
 quit_str_dict = {"fr":"Q ou Échap pour quitter", "en":"Q or escape to quit"}
 if len(sys.argv) > 1:
     if sys.argv[1] not in quit_str_dict:
-        print("cette langue n'est pas disponible\nthat language is not available", file=sys.stderr)
+        print("cette langue n'est pas disponible :", sys.argv[1], "\nthat language is not available:", sys.argv[1], file=sys.stderr)
         sys.exit(1)
     lang = sys.argv[1]
 pygame.mixer.init()
