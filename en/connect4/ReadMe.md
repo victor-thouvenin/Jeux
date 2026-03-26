@@ -50,13 +50,13 @@ Players simply enter the column number.
 #### 📡 1. Server (Player 1)
 
 ```bash
-ruby puissance4.rb --online [port]
+ruby puissance4.rb --LAN [port]
 ```
 
 Example :
 
 ```bash
-ruby puissance4_server.rb --online 5000
+ruby puissance4_server.rb --LAN 5000
 ```
 
 The server will wait for player 2 to connect.
@@ -122,6 +122,8 @@ player 1's turn: 5
 | | | | |O| | |
 |O| | | |@| | |
 ---------------
+
+[...]
 ```
 
 ---

@@ -42,7 +42,7 @@ Each project explores different concepts such as terminal interaction, graphical
 │   └── tic-tac-toe/
 ├── gomoku/
 ├── nim/
-├── puissance4/ # this is connect 4
+├── connect_4/
 ├── snake/
 ├── sokoban/
 └── sudoku/

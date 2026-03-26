@@ -1,15 +1,17 @@
-#!/usr/bin/ruby
-
 require 'socket'
 
 @online = false
-if ARGV[0] == "--online"
+if ARGV[0] == "--LAN"
     if ARGV.length < 2
-        puts "you must enter the game port if you to play online"
+        puts "il faut saisir le port du jeu pour jouer en ligne."
         exit 1
     end
-    socket = TCPServer.new (ARGV[1])
-    puts "waiting for connection"
+    begin
+        socket = TCPServer.new (ARGV[1])
+    rescue
+        puts "Une erreur s'est produite"
+    end
+    puts "en attente de connexion"
     @client = socket.accept
     @online = true
 end
@@ -37,26 +39,26 @@ end
 def play()
     if @player == 0 || !@online
         if !@online
-            print "player #{@player+1}'s turn: "
+            print "tour du joueur #{@player+1} : "
         else
-            puts "your turn"
-            @client.print "opponent playing\n\n"
+            puts "à ton tour"
+            @client.print "tour de l'adversaire\n\n"
         end
         ind = $stdin.gets.chomp.to_i() -1
         if ind < 0 || ind > 6
-            puts "invalid input"
+            puts "entrée invalide"
             return false
         end
     else
         begin
-            @client.puts "your turn"
+            @client.puts "à ton tour"
         rescue
             raise "error"
         end
-        print "opponent playing\n\n"
+        print "tour de l'adversaire\n\n"
         ind = @client.gets.chomp.to_i() -1
         if ind < 0 || ind > 6
-            @client.puts "invalid input"
+            @client.puts "entrée invalide"
             return false
         end
     end
@@ -66,9 +68,9 @@ def play()
             return true
         elsif i == 5
             if @player == 0  || !@online
-                print "that column is already full\n\n"
+                print "Cette colonne est déjà pleine\n\n"
             else
-                @client.print "that column is already full\n\n"
+                @client.print "Cette colonne est déjà pleine\n\n"
             end
             return false
         end
@@ -109,27 +111,27 @@ loop do
             next
         end
     rescue
-        puts "an error has occured"
+        puts "Une erreur s'est produite"
         break
     end
     print_tab
     if check_win
         if !@online
-            puts "player #{@player+1} won"
+            puts "le joueur #{@player+1} a gagné"
         elsif @player == 0
-            puts "you win ! perfect"; @client.puts "you lose. huuuuuu"
+            puts "gagné ! SUUUUPER"; @client.puts "perdu. (c'est le jeu ma pauvre lucette)"
         else
-            puts "you lose. huuuuuu"; @client.puts "you win ! perfect"
+            puts "perdu. (c'est le jeu ma pauvre lucette)"; @client.puts "gagné ! SUUUUPER"
         end
         break
     elsif check_tie
-        puts "tie"
+        puts "match nul"
         if @online
-            @client.puts "tie"
+            @client.puts "match nul"
         end
         break
     end
-    @player = (@player + 1) % 2
+    @player ^= 1
 end
 
 if @online

@@ -1,27 +1,25 @@
-#!/usr/bin/ruby
-
 require 'socket'
 
 if ARGV.length < 2
-    puts "you must enter the host ip and the game port"
+    puts "il faut saisir l'adresse IP de l'hôte et le port du jeu"
     exit 1
 end
 socket = TCPSocket.new(ARGV[0], ARGV[1])
 if !socket
-    puts "connection error"
+    puts "erreur de connexion"
     exit 1
 end
-puts "connected"
+puts "connecté"
 begin
     while line = socket.gets
         puts line
-        if line == "your turn\n"
+        if line == "à ton tour\n"
             ind = $stdin.gets.chomp
             socket.puts ind
         end
     end
 rescue
-    puts "an error has occured"
+    puts "Une erreur s'est produite"
     socket.close
     exit 1
 end

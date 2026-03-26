@@ -52,13 +52,13 @@ Les joueurs entrent simplement le numéro de colonne à leur tour.
 #### 📡 1. Lancer le serveur (Joueur 1)
 
 ```bash
-ruby puissance4_server.rb --online [port]
+ruby puissance4_server.rb --LAN [port]
 ```
 
 Exemple :
 
 ```bash
-ruby puissance4_server.rb --online 5000
+ruby puissance4_server.rb --LAN 5000
 ```
 
 Le serveur attendra la connexion du joueur 2.
@@ -94,7 +94,7 @@ Le client se connecte alors au serveur et la partie peut commencer.
 | | | | | | | |
 ---------------
 
-player 1's turn: 1
+tour du joueur 1 : 1
  1 2 3 4 5 6 7
 | | | | | | | |
 | | | | | | | |
@@ -105,7 +105,7 @@ player 1's turn: 1
 |O| | | | | | |
 ---------------
 
-player 2's turn: 5
+tour du joueur 2 : 5
  1 2 3 4 5 6 7
 | | | | | | | |
 | | | | | | | |
@@ -116,7 +116,7 @@ player 2's turn: 5
 |O| | | |@| | |
 ---------------
 
-player 1's turn: 5
+tour du joueur 1 : 5
  1 2 3 4 5 6 7
 | | | | | | | |
 | | | | | | | |
@@ -126,6 +126,8 @@ player 1's turn: 5
 | | | | |O| | |
 |O| | | |@| | |
 ---------------
+
+[...]
 ```
 
 ---
