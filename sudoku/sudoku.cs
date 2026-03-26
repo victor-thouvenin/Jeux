@@ -1,8 +1,27 @@
 ﻿using System;
 
 class Sudoku {
+    static string lang = "fr";
+    static  Dictionary<string, string> err_msg = new Dictionary<string, string> {
+        {"fr", "non, c'est un nombre prédéfini.\n> "},
+        {"en", "nope, that's a predefined number.\n> "},
+    };
+    static  Dictionary<string, string> win_msg = new Dictionary<string, string> {
+        {"fr", "Gagné ! SUUUUPER."},
+        {"en", "You Win ! perfect."},
+    };
     static int[][] filledGrid = new int[9][];
-    static int[][] grid = new int[9][] {new int[9], new int[9], new int[9], new int[9], new int[9], new int[9], new int[9], new int[9], new int[9],};
+    static int[][] grid = new int[9][] {
+        new int[9],
+        new int[9],
+        new int[9],
+        new int[9],
+        new int[9],
+        new int[9],
+        new int[9],
+        new int[9],
+        new int[9],
+    };
 
     static List<int> checkPossibilities(int i, int j, int n) {
         var pos = new List<int> {0, 1, 2, 3, 4, 5, 6, 7, 8};
@@ -155,7 +174,6 @@ class Sudoku {
         rng = new Random(rng.Next());
         rng = new Random(rng.Next());
         fillGrid(1, 0, 0, rng);
-        printGrid(filledGrid);
         do {
             rng = new Random(rng.Next());
             emptyGrid(rng);
@@ -176,15 +194,24 @@ class Sudoku {
                 num = gridToPrint[i][j];
                 num = num < 10 ? num : num-10;
                 Console.Write(" " + (num == 0 ? "_" : num.ToString()));
-                if (j % 3 == 2)
+                if (j == 8)
+                    Console.WriteLine(" |");
+                else if (j % 3 == 2)
                     Console.Write(" |");
             }
-            Console.WriteLine("");
         }
         Console.WriteLine(border);
     }
 
     static int Main(string[] arg) {
+        if (arg.Count() > 1) {
+            if (win_msg.ContainsKey(arg[1]))
+                lang = arg[1];
+            else {
+                Console.WriteLine($"cette langue n'est pas disponible : {arg[1]}\nthat language is not available: {arg[1]}");
+                return 1;
+            }
+        }
         initGrid();
         printGrid(grid);
         start();
@@ -233,7 +260,7 @@ class Sudoku {
                 continue;
             }
             if (grid[i-1][j-1] != 0 && grid[i-1][j-1] < 10) {
-                Console.WriteLine("nope, that's a predefined number.");
+                Console.Write(err_msg[lang]);
                 i = j = num = 0;
                 continue;
             }
@@ -241,7 +268,7 @@ class Sudoku {
             printGrid(grid);
             i = j = num = 0;
             if (checkWin()) {
-                Console.WriteLine("You Win, perfect.");
+                Console.WriteLine(win_msg[lang]);
                 break;
             }
             Console.Write("> ");
