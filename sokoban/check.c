@@ -48,14 +48,14 @@ int check_str(char *str)
         if ((j == 0 || str[j-1] == '\n') && str[j] != '\n')
             ++i;
         else if (str[j] != 'P' && str[j] != 'O' && str[j] != 'X' && str[j] != ' ' && str[j] != '#' && str[j] != '\n') {
-            fprintf(stderr, "ERROR: charactere \'%c\' is invalide\n", str[j]);
+            fprintf(stderr, get_msg("error_invalid_charactere"), str[j]);
             return -1;
         }
         switch (str[j])
         {
         case 'P':
             if (p) {
-                fputs("ERROR: there is too many player on that map\n", stderr);
+                fputs(get_msg("error_many_player"), stderr);
                 return -1;
             }
             p = 1;
@@ -70,11 +70,11 @@ int check_str(char *str)
         ++j;
     }
     if (!p) {
-        fputs("ERROR: there is no player on that map\n", stderr);
+        fputs(get_msg("error_no_player"), stderr);
         return -1;
     }
     if (o > 0) {
-        fputs("ERROR: there is not enough box on that map\n", stderr);
+        fputs(get_msg("error_not_enough_box"), stderr);
         return -1;
     }
     return i;

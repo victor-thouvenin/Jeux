@@ -20,17 +20,11 @@ ntt_t *get_ntt(ntt_t *nttl, point_t pos, char ntt)
 
 void reset(char **map, ntt_t *nttl)
 {
-    int i = 0;
-    int j = 0;
-
-    while (map[i]) {
-        if (map[i][j] == 'P' || map[i][j] == 'X')
-            map[i][j] = ' ';
-        if (map[i][j] == '\0') {
-            ++i;
-            j = -1;
-        }
-        ++j;
+    ntt_t *copy = nttl;
+    while (copy) {
+        if (map[copy->pos.x][copy->pos.y] == 'P' || map[copy->pos.x][copy->pos.y] == 'X')
+            map[copy->pos.x][copy->pos.y] = ' ';
+        copy = copy->next;
     }
     while (nttl) {
         nttl->pos.x = nttl->basic_pos.x;
@@ -47,7 +41,8 @@ void check_move(char **map, ntt_t *nttl, ntt_t *pl, point_t m)
 
     if (pos.x < 0 || map[pos.x] == NULL || pos.y < 0 || pos.y >= (int)strlen(map[pos.x]) || map[pos.x][pos.y] == '#' ||
         (map[pos.x][pos.y] == 'X' &&
-         (pos2.x < 0 || map[pos2.x] == NULL || pos2.y < 0 || pos2.y >= (int)strlen(map[pos2.x]) || map[pos2.x][pos2.y] == '#' || map[pos2.x][pos2.y] == 'X')))
+         (pos2.x < 0 || map[pos2.x] == NULL || pos2.y < 0 || pos2.y >= (int)strlen(map[pos2.x]) ||
+          map[pos2.x][pos2.y] == '#' || map[pos2.x][pos2.y] == 'X')))
         return;
 
     ntt_t *cur = NULL;
@@ -132,19 +127,16 @@ int screen(char **map)
     int key = 0;
     ntt_t *nttl = create_ntt_list(map);
 
-    if (nttl == NULL)
+    if (nttl == NULL) {
+        fputs(get_msg("error_memory"), stderr);
         return 1;
+    }
     initscr();
     keypad(stdscr, true);
     while (1) {
         for (int i = 0; map[i] != NULL; i++)
             printw("%s\n", map[i]);
-        if (b == 1)
-            printw("win\n");
-        if (b == -1)
-            printw("loose\n");
         key = getch();
-        clear();
         if (key == ' ')
             reset(map, nttl);
         else if (b != 0 || key == 'q' || key == KEY_END)
@@ -152,9 +144,14 @@ int screen(char **map)
         else if (key >= KEY_DOWN && key <= KEY_RIGHT)
             move_p(map, nttl, key);
         b = check_end(map, nttl);
+        clear();
         refresh();
     }
     endwin();
     free_ntt_list(nttl);
+    if (b == 1)
+        fputs(get_msg("win"), stdout);
+    if (b == -1)
+        fputs(get_msg("loose"), stdout);
     return 0;
 }

@@ -21,35 +21,29 @@ char *read_file(char *path)
 
     fd = open(path, O_RDONLY);
     if (fd == -1) {
-        char *emsg = "ERROR: couldn't open \"%s\"\n";
-        fprintf(stderr, emsg, path);
+        fprintf(stderr, get_msg("error_file_not_openable"), path);
         return NULL;
     } if (stat(path, &filestat) == -1) {
-        char *emsg = "an error occurred\n";
-        fputs(emsg, stderr);
+        fputs(get_msg("error_general"), stderr);
         close(fd);
         return NULL;
     } if (filestat.st_size < 3) {
-        char *emsg = "ERROR: file is too small\n";
-        fputs(emsg, stderr);
+        fputs(get_msg("error_small_file"), stderr);
         close(fd);
         return NULL;
     } if (filestat.st_size > 2147483647) {
-        char *emsg = "ERROR: file is too large\n";
-        fputs(emsg, stderr);
+        fputs(get_msg("error_big_file"), stderr);
         close(fd);
         return NULL;
     }
     str = malloc(filestat.st_size + 1);
     if (str == NULL) {
-        char *emsg = "MEMORY ERROR: an error occurred\n";
-        fputs(emsg, stderr);
+        fputs(get_msg("error_memory"), stderr);
         close(fd);
         return NULL;
     }
     if (read(fd, str, filestat.st_size) <= 0) {
-        char *emsg = "ERROR: couldn't read file\n";
-        fputs(emsg, stderr);
+        fputs(get_msg("error_file_not_readable"), stderr);
         free(str);
         close(fd);
         return NULL;
@@ -59,21 +53,29 @@ char *read_file(char *path)
     return str;
 }
 
-char **create_map(char *str, int size) {
+void free_map(char **tab, int size)
+{
+    while (--size >= 0)
+        free(tab[size]);
+    free(tab);
+}
+
+char **create_map(char *str, int size)
+{
     int i = 0;
     int i2 = 0;
     int j = 0;
     char **tab = malloc(sizeof(char*)*(size+1));
 
+    if (tab == NULL)
+        return NULL;
     while (str[i+i2] != '\0') {
         if (str[i+i2] != '\n')
             ++i;
         else if (i != 0) {
             tab[j] = strndup(str+i2, i);
             if (tab[j] == NULL) {
-                while (--j >= 0)
-                    free(tab[j]);
-                free(tab);
+                free_map(tab, j);
                 return NULL;
             }
             ++j;
@@ -86,9 +88,7 @@ char **create_map(char *str, int size) {
     if (i != 0) {
         tab[j] = strndup(str+i2, i);
         if (tab[j] == NULL) {
-            while (--j >= 0)
-                free(tab[j]);
-            free(tab);
+            free_map(tab, j);
             return NULL;
         }
         ++j;
@@ -99,32 +99,30 @@ char **create_map(char *str, int size) {
 
 int main(int ac, char **av)
 {
-    char *str;
-    char **map;
-    int i;
-    int j = 0;
-    int rv;
-
-    if (ac != 2)
+    if (ac != 2 && ac != 3) {
+        fprintf(stderr, get_msg("error_parameter"), ac);
         return 1;
-    str = read_file(av[1]);
+    }
+    if (ac == 3) {
+        set_lang(av[2]);
+    }
+
+    char *str = read_file(av[1]);
     if (str == NULL)
         return 1;
-    i = check_str(str);
+    int i = check_str(str);
     if (i == -1) {
         free(str);
         return 1;
     }
-    map = create_map(str, i);
+    char **map = create_map(str, i);
     free(str);
-    rv = screen(map);
-    if (rv == 1) {
-        char *emsg = "an error occurred\n";
-        fputs(emsg, stderr);
+    if (map == NULL) {
+        fputs(get_msg("error_memory"), stderr);
+        free_map(map, i);
+        return 1;
     }
-    while (j < i) {
-        free(map[j++]);
-    }
-    free(map);
+    int rv = screen(map);
+    free_map(map, i);
     return rv;
 }

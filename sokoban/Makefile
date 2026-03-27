@@ -5,7 +5,8 @@
 ## Makefile
 ##
 
-SRC	=	main.c	\
+SRC	=	msg.c	\
+		main.c	\
 		check.c	\
 		screen.c	\
 

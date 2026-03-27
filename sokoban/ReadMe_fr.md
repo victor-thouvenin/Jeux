@@ -67,11 +67,29 @@ Lancez le jeu avec un **fichier de carte** en paramètre :
 ./sokoban <carte.txt>
 ```
 
+Vous pouvez choisir la langue avec un paramètre optionnel :
+
+```bash
+./sokoban <carte.txt> [langue]
+```
+
 ### Exemple :
 
 ```bash
 ./sokoban cartes/niveau1.txt
 ```
+
+lance le jeu sur la carte `niveau1.txt`
+
+et :
+
+```bash
+./sokoban cartes/niveau1.txt fr
+```
+
+lance le jeu en français sur la carte `niveau1.txt`
+
+Le jeu se lance en français par défaut
 
 ---
 

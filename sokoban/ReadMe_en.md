@@ -65,11 +65,29 @@ This generates the executable:
 ./sokoban <map_file>
 ```
 
+You can also choose the language with an optional parameter:
+
+```bash
+./sokoban <map_file> [language]
+```
+
 ### Example:
 
 ```bash
 ./sokoban maps/level1.txt
 ```
+
+Start the game with the map `level1.txt`
+
+and:
+
+```bash
+./sokoban maps/level1.txt en
+```
+
+Start the game in english with the map `level1.txt`
+
+The game launches in French by default
 
 ---
 
