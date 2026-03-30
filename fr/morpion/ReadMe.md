@@ -23,22 +23,24 @@ Les règles du jeu sont simples:
 ## 🧩 Implémentations
 
 - Gestion de l’affichage ASCII du plateau
-- Prise en entrée d’un chiffre `1–9` (le reste de l'entrée est ignoré)
+- Prise en entrée d’un chiffre `1–9`
 - Vérification des coups et détection de victoire
 - 3 implémentations sont disponibles
     - Brainfuck
     - AsciiDots
     - Whenever
 
+Assurez-vous d’avoir les interpréteurs adéquats installés sur votre système.
+
 ### 1️⃣ Morpion en **Brainfuck**
 
 * Version minimaliste en Brainfuck
 
-Assurez-vous d’avoir un interpréteur Brainfuck installé sur votre système (vous pouvez aussi en trouvez un ici 👉 [https://github.com/victor-thouvenin/interpreteur](https://github.com/victor-thouvenin/interpreteur)).
-
 ```bash
-bf tic_tac_toe.bf
+bf morpion.bf
 ```
+
+⚠️ un seul caractère par entré est lu reste ignoré
 
 ---
 
@@ -46,10 +48,8 @@ bf tic_tac_toe.bf
 
 * Version utilisant le langage visuel AsciiDots
 
-Assurez-vous d’avoir un interpréteur Asciidots installé sur votre système
-
 ```bash
-asciidots tic_tac_toe.dots
+asciidots morpion.dots
 ```
 
 ---
@@ -58,10 +58,8 @@ asciidots tic_tac_toe.dots
 
 * Version utilisant le langage non déterministe “Whenever”
 
-Assurez-vous d’avoir un interpréteur whenever installé sur votre système
-
 ```bash
-whenever tic_tac_toe.we
+whenever morpion.we
 ```
 
 ---

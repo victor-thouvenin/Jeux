@@ -1,4 +1,4 @@
-# ❌⭕ Tic-Tac-Toe
+# ❌⬜⭕ Tic-Tac-Toe
 
 This project contains **three implementations of the classic Tic-Tac-Toe game**, each written in a different **esoteric programming language**:
 
@@ -39,7 +39,6 @@ During the game, players input a **number between 1 and 9** to choose a cell:
 ```
 
 - Only valid and empty cells are accepted.
-- Only first caracter of input is read, the rest is ignored
 - Invalid inputs are rejected.
 
 ---
@@ -47,29 +46,26 @@ During the game, players input a **number between 1 and 9** to choose a cell:
 ## 🚀 Execution
 
 Each version is run according to the conventions of its language.
+make you have an interpreter for each one
 
 ### Brainfuck
-
-make you have brainfuck interpreter on your system
 
 ```bash
 bf tic_tac_toe.bf
 ```
 
+⚠️ Only first caracter of input is read, the rest is ignored
+
 ### AsciiDots
 
-make you have asciidots interpreter on your system
-
 ```bash
-asciidots tic_tac_toe.ad
+asciidots tic_tac_toe.dots
 ```
 
 ### Whenever
 
-make you have whenever interpreter on your system
-
 ```bash
-whenever tic_tac_toe.whn
+whenever tic_tac_toe.we
 ```
 
 ⚠️ Interpreter names may differ from the examples.
