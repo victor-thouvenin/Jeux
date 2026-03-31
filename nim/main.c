@@ -134,8 +134,8 @@ int check_opt(int ac, char **av, int *ind)
         } else if (*av[i] == '-' && av[i][1] != '\0') {
             fprintf(stderr, get_msg("error_option"), av[i]);
             return 0;
-        } else {
-            strcpy(av[++*ind], av[i]);
+        } else if (++*ind != i) {
+            strcpy(av[*ind], av[i]);
         }
     }
     if (*ind < 1 || *ind > 3) {
