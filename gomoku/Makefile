@@ -1,10 +1,3 @@
-##
-## EPITECH PROJECT, 2019
-## Makefile
-## File description:
-## Makefile
-##
-
 SRC	=	main.cpp	\
 		board.cpp	\
 		ai_play.cpp	\
