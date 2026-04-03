@@ -42,25 +42,45 @@ javac Minesweeper.java
 ### Run
 
 ```bash
-java Minesweeper [size] [number_of_mines]
+java Minesweeper [size] [number_of_mines] [language]
 ```
 
 ### Parameters:
 
 * `size` *(optional)* : grid size (**10** by default)
 * `number_of_mines` *(optional)* : total number of mines (default depends on the size)
+* `language` *(optional)* : game language (default `fr`)
+
+You can also type `-` to use the default values
 
 ### Examples:
 
 ```bash
-# Grid 10x10 with default number of mines
+# Grid 10x10 with default number of mines in french
 java Minesweeper
 
-# Grid 15x15 with 30 mines
+# Grid 15x15 with 30 mines in french
 java Minesweeper 15 30
+
+# Grid 10X10 with 15 mines in french
+java Minesweeper - 15
+
+# Grid 10x10 with default number of mines in english
+java Minesweeper - - en
+
+# Grid 15x15 with 30 mines in english
+java Minesweeper 15 30 en
 ```
 
-If invalid parameters are provided, the game will fall back to default values.
+---
+
+## 🚀 Script execution
+
+A script, `launch.sh`, with the same parameters as the executable, is available for compilation (if necessary) and execution.
+
+```bash
+./launch.sh [parameters]
+```
 
 ---
 
@@ -73,6 +93,7 @@ If invalid parameters are provided, the game will fall back to default values.
 | `F`        | Place / remove a flag    |
 | `R`        | Restart the game         |
 | `Q`        | Quit the game            |
+| `G`        | Reveal the entire grid (when all the flags are placed) |
 
 ---
 
