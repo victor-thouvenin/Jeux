@@ -21,6 +21,7 @@ Each project explores different concepts such as terminal interaction, graphical
 | Sliding Puzzle        | C#              | Terminal    |
 | Tic-Tac-Toe ×3        | Brainfuck, Asciidots, Whenever | Terminal    |
 | Connect 4             | Ruby            | Terminal + LAN |
+| Blue-jam (work in progress) | Unity/C#  | Graphique   |
 
 ---
 
@@ -33,16 +34,17 @@ Each project explores different concepts such as terminal interaction, graphical
 ```
 
 /
+├── blue-jam/
+├── demineur-minesweeper/
 ├── en/
 │   ├── battleship/
+│   ├── connect_4/
 │   ├── game_of_life/
-│   ├── minesweeper/
 │   ├── repeat/
 │   ├── sliding_puzzle/
 │   └── tic-tac-toe/
 ├── gomoku/
 ├── nim/
-├── connect_4/
 ├── snake/
 ├── sokoban/
 └── sudoku/
