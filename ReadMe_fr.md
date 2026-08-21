@@ -48,7 +48,7 @@ Ce dépôt rassemble plusieurs petits jeux classiques (et certains moins classiq
 ```
 /
 ├── blue-jam/
-├── demineur/
+├── demineur-minesweeper/
 ├── fr/
 │   ├── Bataille_navale/
 │   ├── game_of_life/
