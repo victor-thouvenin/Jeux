@@ -46,7 +46,7 @@ During the game, players input a **number between 1 and 9** to choose a cell:
 ## 🚀 Execution
 
 Each version is run according to the conventions of its language.
-make you have an interpreter for each one
+make sure you have an interpreter for each one
 
 ### Brainfuck
 
