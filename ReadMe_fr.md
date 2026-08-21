@@ -21,6 +21,7 @@ Ce dépôt rassemble plusieurs petits jeux classiques (et certains moins classiq
 | Taquin           | C#              | Terminal    |
 | Morpion ×3       | Brainfuck, Asciidots, Whenever | Terminal    |
 | Puissance 4      | Ruby            | Terminal + LAN |
+| Blue-jam (en cours) | Unity/C#     | Graphique   |
 
 ---
 
@@ -46,16 +47,17 @@ Ce dépôt rassemble plusieurs petits jeux classiques (et certains moins classiq
 
 ```
 /
+├── blue-jam/
+├── demineur/
 ├── fr/
 │   ├── Bataille_navale/
-│   ├── demineur/
 │   ├── game_of_life/
 │   ├── morpion/
+│   ├── puissance4/
 │   ├── repeat/
 │   └── taquin/
 ├── gomoku/
 ├── nim/
-├── puissance4/
 ├── snake/
 ├── sokoban/
 └── sudoku/
